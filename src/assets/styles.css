@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-image: linear-gradient(160deg, #050a12, #0a1a2f, #112e42, #1b2f4a);
+  overscroll-behavior: none;
+}
+
+.header {
+  @apply fixed top-0 left-0 right-0 z-50;
+}
+
+.sideBar {
+  @apply fixed top-0 left-0 bottom-0 z-20 mt-20  bg-[#030303]/90;
+}
+
+.sideBar nav ul li a.active {
+  @apply bg-white/20 rounded-2xl;
+}
+
+.contentContainer {
+  @apply relative top-0 ml-61 mr-10 mt-30 pb-28;
+}
+
+.quickPicks ul li a:hover i,
+.contentContainer ul li a:hover i {
+  @apply visible;
+}
+.quickPicks ul li a:hover img {
+  @apply opacity-40;
+}
+
+.albumSuggests ul li a:hover i {
+  @apply visible;
+}
+
+.albumSuggests ul li a:hover img {
+  @apply opacity-40;
+}
