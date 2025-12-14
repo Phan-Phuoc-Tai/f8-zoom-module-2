@@ -1,10 +1,16 @@
 //File chính
 
 import "./assets/styles.css";
-import { Header } from "./components/header";
-import { NavBar } from "./components/navBar";
-import { ContentContainer } from "./components/contentContainer";
-import { Footer } from "./components/footer";
+import app from "./app";
+import initRouter from "../route/router";
+const render = async function () {
+  document.querySelector("#app").innerHTML = await app();
+};
 
-const app = document.querySelector("#app");
-app.innerHTML = `${Header()}${NavBar()}${ContentContainer()}${Footer()}`;
+await render();
+await initRouter();
+
+const container = document.querySelector(".content-container div");
+const sections = container.querySelectorAll("section");
+const ul = sections[1].querySelector("ul");
+ul.className = "flex flex-col max-w-[33.33%] gap-3 pb-14";

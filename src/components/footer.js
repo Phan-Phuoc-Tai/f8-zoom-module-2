@@ -1,4 +1,4 @@
-export const Footer = () => {
+export const Footer = async () => {
   return `
   <footer>
         <section class="fixed left-0 right-0 bottom-0 z-200">
