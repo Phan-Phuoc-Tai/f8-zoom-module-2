@@ -1,3 +1,16 @@
 {
-  
+  "proposeTagName" : [
+    {
+      "name": "Bản phát hành mới",
+      "link": "/new-releases"
+    },
+    {
+      "name": "Bảng xếp hạng",
+      "link": "/charts"
+    },
+    {
+      "name": "Tâm trạng và thể loại",
+      "link": "/moodAndGenres"
+    }
+  ]
 }

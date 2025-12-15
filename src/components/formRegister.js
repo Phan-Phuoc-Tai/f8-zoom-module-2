@@ -1,6 +1,7 @@
-export const FormRegister = () => {
+export const formRegister = () => {
   return `
-  <h2
+    <div class="hidden flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white">
+      <h2
                     class="w-full mb-6 text-xl text-center font-semibold uppercase"
                   >
                     Đăng ký
@@ -67,5 +68,6 @@ export const FormRegister = () => {
                       >Đăng nhập</a
                     >
                   </div>
+    </div>
   `;
 };

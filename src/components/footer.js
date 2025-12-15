@@ -1,7 +1,7 @@
-export const Footer = async () => {
+export const footer = () => {
   return `
   <footer>
-        <section class="fixed left-0 right-0 bottom-0 z-200">
+        <section class="fixed left-0 right-0 bottom-0 z-200 hidden">
           <div class="player-wrapper">
             <div
               class="progress-bar relative top-0 left-0 right-0 h-2.5 bg-white cursor-pointer hover:opacity-85"

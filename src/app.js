@@ -1,13 +1,13 @@
-import { Header } from "./components/header";
-import { Footer } from "./components/footer";
-import { SideBar } from "./components/sideBar";
+import { header } from "./components/header";
+import { footer } from "./components/footer";
+import { sideBar } from "./components/sideBar";
 
 export default async function app() {
   return `
-    ${await Header()}
-    ${await SideBar()}
+    ${header()}
+    ${sideBar()}
     <main class='js-body'>
     </main>
-    ${await Footer()}
+    ${footer()}
   `;
 }

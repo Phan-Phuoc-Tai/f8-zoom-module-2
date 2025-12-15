@@ -1,6 +1,6 @@
-import httpRequest from "../tools/httpRequest";
-import section from "../components/section";
-import templateContent from "../components/templateContent";
+import httpRequest from "../../tools/httpRequest";
+import section from "../../components/section";
+import templateContent from "../../components/templateContent";
 
 async function getItemQuickPicks() {
   const response = await httpRequest.get("/quick-picks");
@@ -38,7 +38,7 @@ async function getItemQuickPicks() {
 const html = await getItemQuickPicks();
 
 function renderQuickPicks() {
-  const quickPicks = templateContent(html);
+  const quickPicks = templateContent(html, true);
   return section("Quick Picks", quickPicks);
 }
 

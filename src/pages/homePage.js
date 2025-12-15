@@ -1,10 +1,10 @@
-import renderAlbums from "../renders/renderAlbums";
-import renderMoods from "../renders/renderMoods";
-import renderQuickPicks from "../renders/renderQuickPicks";
-import renderTodaysHits from "../renders/renderTodaysHits";
-import renderVNMusics from "../renders/renderVNMusic";
+import renderAlbums from "../renders/homePage/renderAlbums";
+import renderMoods from "../renders/homePage/renderMoods";
+import renderQuickPicks from "../renders/homePage/renderQuickPicks";
+import renderTodaysHits from "../renders/homePage/renderTodaysHits";
+import renderVNMusics from "../renders/homePage/renderVNMusic";
 
-function HomePage() {
+function homePage() {
   return `<div class="content-container">
     <div class="p-2">
     ${renderMoods()}
@@ -17,4 +17,4 @@ function HomePage() {
   `;
 }
 
-export default HomePage;
+export default homePage;

@@ -1,4 +1,8 @@
-export default function templateContent(html) {
+export default function templateContent(html, isQuickPicks = false) {
+  const className =
+    isQuickPicks === false
+      ? `xScroll flex gap-3 pb-14 overflow-x-auto scroll-smooth`
+      : `xScroll flex flex-col max-w-[33.33%] gap-3 pb-14`;
   return `
   <div class="relative">
               <div class="absolute right-0 -top-15 flex items-center gap-4">
@@ -13,7 +17,7 @@ export default function templateContent(html) {
                   <i class="fa-solid fa-angle-right"></i>
                 </button>
               </div>
-              <ul class="flex gap-3 pb-14 overflow-x-auto scroll-smooth">
+              <ul class="${className}">
                 ${html}
               </ul>
             </div>`;

@@ -1,4 +1,4 @@
-export const SideBar = async () => {
+export const sideBar = () => {
   return `
   <aside class="side-bar">
         <nav class="side-bar-desktop px-2 text-white">
@@ -49,12 +49,12 @@ export const SideBar = async () => {
             <span class="text-[11px] font-normal">Đăng nhập</span>
           </a>
         </nav>
-        <div class="side-bar-modal fixed inset-0 opacity-0 invisible">
+        <div class="side-bar-modal fixed inset-0 z-990 opacity-0 invisible transition duration-400">
           <div
             class="overlay absolute inset-0 bg-[rgba(0,0,0,0.7)] cursor-pointer"
           ></div>
           <div
-            class="modal-inner absolute top-0 bottom-0 left-0 w-55 z-999 bg-black border-r border-neutral-600"
+            class="modal-inner absolute top-0 bottom-0 left-0 w-55 z-999 bg-black border-r border-neutral-600 duration-400 transition -translate-x-full "
           >
             <div class="modal-heading px-4 py-3">
               <div class="flex items-center gap-3">

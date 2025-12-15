@@ -12,7 +12,7 @@ body {
   @apply fixed top-0 left-0 right-0 z-50;
 }
 
-.side-bar {
+.side-bar .side-bar-desktop {
   @apply fixed top-0 left-0 bottom-0 z-100 mt-20  bg-[#030303]/90;
 }
 
@@ -30,4 +30,15 @@ body {
 
 .content-container ul li a:hover img {
   @apply opacity-40;
+}
+
+.content-container .xScroll::-webkit-scrollbar {
+  @apply h-1.5;
+}
+.content-container .xScroll::-webkit-scrollbar-track {
+  @apply bg-neutral-900 rounded-full;
+}
+
+.content-container .xScroll::-webkit-scrollbar-thumb {
+  @apply bg-neutral-500 rounded-full cursor-pointer;
 }

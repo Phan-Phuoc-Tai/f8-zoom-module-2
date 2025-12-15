@@ -1,6 +1,6 @@
-import httpRequest from "../tools/httpRequest";
-import section from "../components/section";
-import templateContent from "../components/templateContent";
+import httpRequest from "../../tools/httpRequest";
+import section from "../../components/section";
+import templateContent from "../../components/templateContent";
 
 async function getItemMoods() {
   const response = await httpRequest.get("/moods");
