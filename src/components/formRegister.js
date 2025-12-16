@@ -1,6 +1,6 @@
 export const formRegister = () => {
   return `
-    <div class="hidden flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white">
+    <div class="register hidden-form flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500   opacity-0 invisible hidden ">
       <h2
                     class="w-full mb-6 text-xl text-center font-semibold uppercase"
                   >
@@ -62,10 +62,9 @@ export const formRegister = () => {
                     class="mt-10 flex items-center justify-center gap-1.5 w-full text-sm"
                   >
                     <span class="text-gray-500">Bạn đã có tài khoản?</span>
-                    <a
-                      href="#!"
-                      class="text-white font-semibold underline hover:text-red-400 cursor-pointer"
-                      >Đăng nhập</a
+                    <button
+                      class="login-btn text-white font-semibold underline hover:text-red-400 cursor-pointer"
+                      >Đăng nhập</button
                     >
                   </div>
     </div>

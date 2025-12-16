@@ -1,6 +1,6 @@
-import { header } from "./components/header";
-import { footer } from "./components/footer";
+import header from "./components/header";
 import { sideBar } from "./components/sideBar";
+import { footer } from "./components/footer";
 
 export default async function app() {
   return `
@@ -8,6 +8,7 @@ export default async function app() {
     ${sideBar()}
     <main class='js-body'>
     </main>
+    <div class='toast'></div>
     ${footer()}
   `;
 }

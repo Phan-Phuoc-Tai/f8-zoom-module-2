@@ -1,6 +1,6 @@
 export const formLogin = () => {
   return `
-  <div class="flex flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white">
+  <div class="login active-form flex flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500  opacity-100 visible ">
     <h2
                     class="w-full mb-6 text-xl text-center font-semibold uppercase"
                   >
@@ -13,7 +13,7 @@ export const formLogin = () => {
                         type="email"
                         placeholder="Email của bạn"
                         name="email"
-                        class="w-full outline-0 border border-neutral-500 px-4 py-2 rounded-md bg-white/70 text-gray-600 focus:outline-2 focus:outline-black focus:border-black"
+                        class="js-email w-full outline-0 border border-neutral-500 px-4 py-2 rounded-md bg-white/70 text-gray-600 focus:outline-2 focus:outline-black focus:border-black"
                       />
                     </label>
                     <label class="mt-6">
@@ -24,7 +24,7 @@ export const formLogin = () => {
                         type="password"
                         placeholder="Mật khẩu"
                         name="password"
-                        class="w-full outline-0 border border-neutral-500 px-4 py-2 rounded-md bg-white/70 text-gray-600 focus:outline-2 focus:outline-black focus:border-black"
+                        class="js-password w-full outline-0 border border-neutral-500 px-4 py-2 rounded-md bg-white/70 text-gray-600 focus:outline-2 focus:outline-black focus:border-black"
                       />
                     </label>
                     <button
@@ -38,10 +38,9 @@ export const formLogin = () => {
                     class="mt-10 flex items-center justify-center gap-1.5 w-full text-sm"
                   >
                     <span class="text-gray-500">Bạn chưa có tài khoản?</span>
-                    <a
-                      href="#!"
-                      class="text-white font-semibold underline hover:text-red-400 cursor-pointer"
-                      >Đăng ký</a
+                    <button
+                      class="register-btn text-white font-semibold underline hover:text-red-400 cursor-pointer"
+                      >Đăng ký</button
                     >
                   </div>
   </div>

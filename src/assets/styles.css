@@ -42,3 +42,18 @@ body {
 .content-container .xScroll::-webkit-scrollbar-thumb {
   @apply bg-neutral-500 rounded-full cursor-pointer;
 }
+
+.toast {
+  @apply invisible w-max bg-[#292929] text-white font-bold text-center rounded-sm p-4 fixed z-70 -right-5 top-20 text-base opacity-0 transition-all duration-500;
+}
+
+.toast.show {
+  @apply visible opacity-100 right-5;
+}
+
+.toast.success {
+  @apply bg-green-600;
+}
+.toast.error {
+  @apply bg-red-600;
+}

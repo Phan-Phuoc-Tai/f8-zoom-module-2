@@ -1,28 +1,20 @@
 import Navigo from "navigo";
 import homePage from "../src/pages/homePage";
-import explorePage from "../src/pages/explorePage";
-import loginPage from "../src/pages/login";
-import playlistPage from "../src/pages/playlistPage";
+import loginPage from "../src/pages/loginPage";
+import { eventApp } from "../src/tools/application";
 
-const router = new Navigo("/");
+export const router = new Navigo("/");
 
 const initRouter = async () => {
   const pageContent = document.querySelector(".js-body");
+  router.updatePageLinks();
   router
     .on("/", async () => {
-      pageContent.innerHTML = homePage();
+      pageContent.innerHTML = await homePage();
     })
-    .on("/explore", () => {
-      pageContent.innerHTML = explorePage();
-    })
-    .on("/library", () => {
-      pageContent.innerHTML = loginPage(); //rename NOTICE
-    })
-    .on("/login", () => {
-      pageContent.innerHTML = loginPage();
-    })
-    .on("/playlist/details/", () => {
-      pageContent.innerHTML = playlistPage();
+    .on("/login", async () => {
+      pageContent.innerHTML = await loginPage();
+      eventApp.init();
     })
     .resolve();
 };

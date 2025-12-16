@@ -1,4 +1,4 @@
-export const header = () => {
+export default function header() {
   return `
   <header class="header">
         <nav class="flex items-center gap-0.5 px-4 py-3.5 bg-[#030303]/90">
@@ -10,7 +10,7 @@ export const header = () => {
             </div>
             <div class="logo">
               <a
-                href="/"
+                href="/" data-navigo
                 class="flex items-center w-max lg:mr-10 gap-1.5 px-3 py-1.5 cursor-pointer select-none"
               >
                 <img
@@ -50,13 +50,19 @@ export const header = () => {
                 <i class="fa-solid fa-ellipsis-vertical"></i>
               </button>
             </div>
-            <div
-              class="px-4 py-2 lg:mr-10 rounded-full bg-white/90 font-semibold hover:bg-white/80 hover:rounded-full cursor-pointer select-none"
-            >
-              <a href="/login">Đăng nhập</a>
+            
+            <div class="user-profile">
+              <a
+        href="/login"
+        data-navigo
+        class="px-4 py-2 lg:mr-10 rounded-full bg-white/90 font-semibold hover:bg-white/80 hover:rounded-full cursor-pointer select-none"
+      >
+        Đăng nhập
+      </a>
             </div>
+            
           </div>
         </nav>
       </header>
   `;
-};
+}

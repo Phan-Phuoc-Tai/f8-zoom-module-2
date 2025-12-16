@@ -1,7 +1,7 @@
 import { formLogin } from "../components/formLogin";
 import { formRegister } from "../components/formRegister";
 
-function loginPage() {
+async function loginPage() {
   return `
       <div class="fixed inset-0 -z-1 bg-black">
         <div
