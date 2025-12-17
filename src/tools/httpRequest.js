@@ -1,12 +1,14 @@
 import axios from "axios";
 import { router } from "../../route/router";
+import { notice } from "./notice";
+import { eventApp } from "./application";
 
 const httpRequest = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API,
 });
 
 httpRequest.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   } else {
@@ -16,14 +18,23 @@ httpRequest.interceptors.request.use((config) => {
 });
 
 let refreshPromise = null;
-const logout = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
-  router.navigate("/");
+export const logout = () => {
+  try {
+    eventApp.showLoading();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    router.navigate("/login");
+    notice.showSuccess("Đăng xuất thành công!");
+  } catch (e) {
+    notice.showError(e.message);
+  } finally {
+    notice.hideNotice();
+    eventApp.removeLoading();
+  }
 };
 const getNewToken = async () => {
   try {
-    const refreshToken = localStorage.getItem("refresh_token");
+    const refreshToken = localStorage.getItem("refreshToken");
     const response = await fetch(
       `https://youtube-music.f8team.dev/api/auth/refresh-token`,
       {
@@ -37,7 +48,7 @@ const getNewToken = async () => {
       }
     );
     if (!response.ok) {
-      throw new Error("Unauthorize");
+      throw new Error("Unauthorized");
     }
     return response.json();
   } catch {
@@ -58,8 +69,8 @@ httpRequest.interceptors.response.use(
       const newToken = await refreshPromise;
       if (newToken) {
         //lưu vào localStorage
-        localStorage.setItem("access_token", newToken.access_token);
-        localStorage.setItem("refresh_token", newToken.refresh_token);
+        localStorage.setItem("accessToken", newToken.access_token);
+        localStorage.setItem("refreshToken", newToken.refresh_token);
         //Gọi lại request bị failed
         return httpRequest(error.config);
       } else {

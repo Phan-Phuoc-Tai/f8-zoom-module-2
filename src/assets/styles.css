@@ -5,6 +5,7 @@ body {
   font-family: "Roboto";
   background-image: linear-gradient(160deg, #050a12, #0a1a2f, #112e42, #1b2f4a);
   background-repeat: no-repeat;
+  background-size: cover;
   overscroll-behavior: none;
 }
 
@@ -44,16 +45,20 @@ body {
 }
 
 .toast {
-  @apply invisible w-max bg-[#292929] text-white font-bold text-center rounded-sm p-4 fixed z-70 -right-5 top-20 text-base opacity-0 transition-all duration-500;
+  @apply fixed z-70 -right-5 top-20 opacity-0 invisible transition-all duration-500;
 }
 
 .toast.show {
   @apply visible opacity-100 right-5;
 }
 
-.toast.success {
+.toast .toast-message {
+  @apply w-max rounded-sm p-4 text-base mb-3 text-white font-bold text-center transition-all duration-500;
+}
+
+.toast-message.success {
   @apply bg-green-600;
 }
-.toast.error {
+.toast-message.error {
   @apply bg-red-600;
 }

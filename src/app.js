@@ -9,6 +9,7 @@ export default async function app() {
     <main class='js-body'>
     </main>
     <div class='toast'></div>
+    <div class='js-loading'></div>
     ${footer()}
   `;
 }

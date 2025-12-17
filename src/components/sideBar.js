@@ -30,7 +30,7 @@ export const sideBar = () => {
                 <span class="text-[11px] font-normal">Thư viện</span>
               </a>
             </li>
-            <li class="hidden">
+            <li class="js-vip-side-bar hidden">
               <a
                 href="#!"
                 class="flex flex-col items-center gap-1 p-3 mb-1 hover:bg-white/10 hover:rounded-2xl"
@@ -43,7 +43,7 @@ export const sideBar = () => {
 
           <a
             href="/login" data-navigo
-            class="flex flex-col items-center gap-1 p-3 mt-3 hover:bg-white/10 hover:rounded-2xl"
+            class="js-login-side-bar flex flex-col items-center gap-1 p-3 mt-3 hover:bg-white/10 hover:rounded-2xl"
           >
             <i class="fa-regular fa-user text-2xl"></i>
             <span class="text-[11px] font-normal">Đăng nhập</span>
@@ -59,13 +59,13 @@ export const sideBar = () => {
             <div class="modal-heading px-4 py-3">
               <div class="flex items-center gap-3">
                 <div
-                  class="side-bar-toggle p-3 text-xl text-white/90 hover:bg-white/30 hover:rounded-full cursor-pointer select-none"
+                  class="close-modal p-3 text-xl text-white/90 hover:bg-white/30 hover:rounded-full cursor-pointer select-none"
                 >
                   <button class="fa-solid fa-xmark cursor-pointer"></button>
                 </div>
                 <div class="logo">
                   <a
-                    href="#!"
+                    href="/"
                     class="flex items-center w-max gap-1.5 cursor-pointer select-none"
                   >
                     <img
@@ -107,7 +107,7 @@ export const sideBar = () => {
                     <span class="text-base font-medium">Thư viện</span>
                   </a>
                 </li>
-                <li class="hidden">
+                <li class="js-vip-modal hidden">
                   <a
                     href="#!"
                     class="flex items-center gap-4 p-3 mb-1 hover:bg-white/10 hover:rounded-2xl"
@@ -119,12 +119,12 @@ export const sideBar = () => {
               </ul>
 
               <a
-                href="#!"
-                class="flex items-center justify-center gap-4 p-3 mt-3 bg-white/10 rounded-2xl hover:bg-white/20"
+                href="/login"
+                class="js-login-modal flex items-center justify-center gap-4 p-3 mt-3 bg-white/10 rounded-2xl hover:bg-white/20"
               >
                 <span class="text-base font-medium">Đăng nhập</span>
               </a>
-              <p class="mt-2 text-[#909090] text-xs leading-loose">
+              <p class="js-desc mt-2 text-[#909090] text-xs leading-loose">
                 Đăng nhập để tạo và chia sẻ danh sách phát, nhận nội dung đề
                 xuất dành riêng cho bạn.
               </p>

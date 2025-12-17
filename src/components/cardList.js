@@ -1,12 +1,18 @@
-function cardList(link, thumbnails, title, subTitle) {
-  return `
+import section from "./section";
+import templateContent from "./templateContent";
+
+export default function cardList(title, items) {
+  const html = items
+    .map((item) => {
+      const link = `${item.type}s/details/${item.slug}`;
+      return `
   <li>
               <a href=${link} class="flex flex-col gap-4 px-3 py-2 rounded-md">
                 <div
                   class="relative flex items-center justify-center w-55 h-55"
                 >
                   <img
-                    src=${thumbnails}
+                    src=${item.thumbnails}
 
                     class="block w-full h-full object-cover rounded-md"
                   />
@@ -16,12 +22,15 @@ function cardList(link, thumbnails, title, subTitle) {
                 </div>
                 <div>
                   <h3 class="text-white font-semibold">
-                    ${title}
+                    ${item.title}
                   </h3>
-                  <p class="text-[14px] text-white/60">${subTitle}</p>
+                  <p class="text-[14px] text-white/60">${item.artists}</p>
                 </div>
               </a>
             </li>
   `;
+    })
+    .join("");
+  const content = templateContent(html);
+  return section(title, content);
 }
-export default cardList;
