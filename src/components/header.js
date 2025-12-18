@@ -14,7 +14,7 @@ export default function header() {
                 class="flex items-center w-max lg:mr-10 gap-1.5 px-3 py-1.5 cursor-pointer select-none"
               >
                 <img
-                  src="./public/images/logo.png"
+                  src="/images/logo.png"
                   alt="YouTube Music Logo"
                   class="block w-10 h-10 object-cover"
                 />

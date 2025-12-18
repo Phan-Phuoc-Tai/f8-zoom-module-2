@@ -1,7 +1,10 @@
+import section from "./section";
+import templateContent from "./templateContent";
+
 function categories(link, color, name) {
   return `
   <a
-        href=${link}
+        href=${link} data-navigo
         class="flex items-center bg-[#292929] h-12 rounded-lg overflow-hidden"
       >
         <span class="block h-full w-2 bg-[${color}]"></span>
@@ -13,4 +16,27 @@ function categories(link, color, name) {
   
   `;
 }
-export default categories;
+
+//tạo innerHtml của thẻ li
+function getItem(arr) {
+  const result = [];
+  arr.map((element) => {
+    let link = `/categories/${element.slug}`;
+    result.push(categories(link, element.color, element.name));
+  });
+  return result.join("");
+}
+
+function listCategories(title, categoriesList) {
+  let html = categoriesList
+    .map((categories) => {
+      let content = `<li class="flex flex-col gap-5 w-59 shrink-0 mr-2">${getItem(
+        categories
+      )}</li>`;
+      return content;
+    })
+    .join("");
+  return section(title, templateContent(html));
+}
+
+export default listCategories;

@@ -1,0 +1,38 @@
+import section from "./section";
+import templateContent from "./templateContent";
+
+function videoList(title, items) {
+  const html = items
+    .map((item) => {
+      const link = `${item.type ?? "video"}s/details/${item.slug}`;
+
+      return `<li>
+    <a href=${link} data-navigo class="flex flex-col gap-4 px-3 py-2 rounded-md">
+      <div
+        class="relative flex items-center justify-center w-100 h-55"
+      >
+        <img
+          src=${item.thumbnails ?? item.thumb}
+          class="block w-full object-cover rounded-md"
+        />
+        <i
+          class="absolute fa-solid fa-play text-3xl text-white invisible"
+        ></i>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold">
+          ${item.name}
+        </h3>
+        <p class="text-[14px] text-white/60">${Math.floor(
+          item.views / 1000
+        )} N lượt xem</p>
+      </div>
+    </a>
+  </li>
+  `;
+    })
+    .join("");
+  const content = templateContent(html);
+  return section(title, content);
+}
+export default videoList;

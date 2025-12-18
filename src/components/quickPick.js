@@ -1,12 +1,15 @@
 import section from "./section";
 import templateContent from "./templateContent";
 
-export default function quickPick(title, items) {
+export default function quickPick(title, items, isPersonalized = false, type) {
   const html = items
     .map((item) => {
+      const link = isPersonalized
+        ? `/${item.type}s/details/${item.id}`
+        : `/${item.type}s/details/${item.slug}`;
       return `<li>
-      <a
-        href="/playlists/details/${item.slug}"
+      <a 
+        href= ${link} data-navigo
         class="flex items-center gap-4 px-3 py-2 rounded-md hover:bg-white/20"
       >
         <div class="relative flex items-center justify-center">

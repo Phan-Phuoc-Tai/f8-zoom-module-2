@@ -2,17 +2,19 @@
   "proposeTagName" : [
     {
       "name": "Bản phát hành mới",
-      "link": "/new-releases"
+      "address": "/new-releases"
     },
     {
       "name": "Bảng xếp hạng",
-      "link": "/charts"
+      "address": "/charts"
     },
     {
       "name": "Tâm trạng và thể loại",
-      "link": "/moodAndGenres"
+      "address": "/mood-and-genres"
     }
-  ]
-
+  ],
+  "playlist" : "/playlist",
+  "songs":"/songs"
+  
   
 }

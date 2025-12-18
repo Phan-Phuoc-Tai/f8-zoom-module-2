@@ -11,5 +11,6 @@ export default async function app() {
     <div class='toast'></div>
     <div class='js-loading'></div>
     ${footer()}
+    <audio></audio>
   `;
 }

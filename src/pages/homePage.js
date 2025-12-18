@@ -20,12 +20,13 @@ async function homePage(
           : ""
       }
       ${tagList("", moods)}
-      ${user ? quickPick("Nghe gần đây", personalized) : ""}
+      ${user ? quickPick("Nghe gần đây", personalized, true) : ""}
       ${quickPick("Quick Picks", quickPicks)}
       ${cardList("Album gợi ý cho bạn", albumForYous)}
       ${cardList("Today's Hits", todaysHits)}
       ${cardList("Nhạc Việt", VNMusic)}
       ${eventApp.removeLoading()}
+
     </div>
   </div>
   `;

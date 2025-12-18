@@ -69,7 +69,7 @@ export const sideBar = () => {
                     class="flex items-center w-max gap-1.5 cursor-pointer select-none"
                   >
                     <img
-                      src="./public/images/logo.png"
+                      src="/images/logo.png"
                       alt="YouTube Music Logo"
                       class="block w-10 h-10 object-cover"
                     />

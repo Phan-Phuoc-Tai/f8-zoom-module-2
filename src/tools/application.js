@@ -21,7 +21,7 @@ export const eventApp = {
     const spin = document.createElement("div");
     const space = spin.cloneNode(true);
     space.className =
-      "fixed inset-0 z-10000 backdrop-blur-xl bg-white/40 flex items-center justify-center";
+      "fixed inset-0 z-10000 backdrop-blur-xl bg-white/30 flex items-center justify-center";
     spin.className =
       "w-12 h-12 border-4 border-neutral-600 rounded-[50%] border-t-white animate-spin";
     loading.append(space);
@@ -243,5 +243,11 @@ export const eventApp = {
     });
   },
 
+  setActiveTrack() {},
   //content : End
+
+  showFooter() {
+    const footerEl = document.querySelector(".js-footer");
+    footerEl.classList.remove("hidden");
+  },
 };

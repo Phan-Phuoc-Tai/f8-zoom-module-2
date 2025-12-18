@@ -4,7 +4,7 @@ import httpRequest from "./httpRequest";
 import { notice } from "./notice";
 import validation from "./validation";
 
-//xử lý login,register, logout, change-password, change-profile
+//xử lý login,register, logout, change-password, change-profile, ghi lại lịch sử nghe nhạc(events/play)
 export const auth = {
   _api: {
     login: "/auth/login",
@@ -34,16 +34,17 @@ export const auth = {
         }
 
         const loginData = await this.requestLogin(email, password);
+        eventApp.removeLoading(0);
         if (loginData) {
           localStorage.setItem("accessToken", loginData.access_token);
           localStorage.setItem("refreshToken", loginData.refresh_token);
-
-          router.navigate("/");
           notice.showSuccess(
             "Đăng nhập thành công! Xin vui lòng đợi trong giây lát!"
           );
         }
+        router.navigate("/");
       } catch (e) {
+        eventApp.removeLoading();
         notice.showError(e.message);
       } finally {
         notice.hideNotice();
@@ -61,11 +62,10 @@ export const auth = {
 
       return response.data;
     } catch {
+      eventApp.removeLoading();
       notice.showError(
         "Email hoặc mật khẩu không chính xác! Xin vui lòng thử lại!"
       );
-    } finally {
-      eventApp.removeLoading();
     }
   },
 
@@ -112,16 +112,12 @@ export const auth = {
           localStorage.setItem("accessToken", registerData.access_token);
           localStorage.setItem("refreshToken", registerData.refresh_token);
 
-          //chuyển sang trang home
+          eventApp.removeLoading();
           notice.showSuccess(
             "Đăng ký thành công! Xin vui lòng đợi trong giây lát!"
           );
-        } else {
-          throw new Error(
-            "Email đã được đăng ký! Xin vui lòng sử dụng email khác!"
-          );
+          router.navigate("/");
         }
-        console.log(registerData);
       } catch (e) {
         notice.showError(e.message);
       } finally {
@@ -131,10 +127,18 @@ export const auth = {
   },
 
   async requestRegister(name, email, password, confirmPassword) {
-    const response = await httpRequest.post(
-      `${this._api.register}`,
-      JSON.stringify({ name, email, password, confirmPassword })
-    );
-    return response.data;
+    try {
+      eventApp.showLoading();
+      const response = await httpRequest.post(
+        `${this._api.register}`,
+        JSON.stringify({ name, email, password, confirmPassword })
+      );
+      return response.data;
+    } catch {
+      eventApp.removeLoading();
+      notice.showError(
+        "Email đã được đăng ký! Xin vui lòng sử dụng email khác!"
+      );
+    }
   },
 };

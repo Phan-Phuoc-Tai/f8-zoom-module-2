@@ -1,13 +1,13 @@
 export const footer = () => {
   return `
   <footer>
-        <section class="fixed left-0 right-0 bottom-0 z-200 hidden">
+        <section class="js-footer fixed left-0 right-0 bottom-0 z-200 hidden">
           <div class="player-wrapper">
             <div
               class="progress-bar relative top-0 left-0 right-0 h-2.5 bg-white cursor-pointer hover:opacity-85"
             >
               <div
-                class="progress absolute top-0 left-0 h-2.5 bg-red-600 w-[30%]"
+                class="progress absolute top-0 left-0 h-2.5 bg-red-600 "
               >
                 <span
                   class="absolute -top-0.5 right-0 block w-3.5 h-3.5 rounded-full bg-red-600 translate-x-[50%]"
@@ -20,17 +20,17 @@ export const footer = () => {
               <div class="left-player flex items-center gap-3">
                 <div class="player-control flex items-center gap-3 text-white">
                   <button
-                    class="p-3 text-lg hover:bg-white/20 hover:rounded-full cursor-pointer"
+                    class="previous-btn p-3 text-lg hover:bg-white/20 hover:rounded-full cursor-pointer"
                   >
                     <i class="fa-solid fa-backward-step"></i>
                   </button>
                   <button
-                    class="p-3 text-3xl hover:bg-white/20 hover:rounded-full cursor-pointer"
+                    class="play-btn p-3 text-3xl hover:bg-white/20 hover:rounded-full cursor-pointer"
                   >
                     <i class="fa-solid fa-play"></i>
                   </button>
                   <button
-                    class="p-3 text-lg hover:bg-white/20 hover:rounded-full cursor-pointer"
+                    class="next-btn p-3 text-lg hover:bg-white/20 hover:rounded-full cursor-pointer"
                   >
                     <i class="fa-solid fa-forward-step"></i>
                   </button>
