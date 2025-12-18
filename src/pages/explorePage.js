@@ -1,7 +1,7 @@
 import cardList from "../components/cardList";
 import listCategories from "../components/categories";
 import propose from "../components/propose";
-import videoList from "../components/videolist";
+import videoList from "../components/videoList";
 import { eventApp } from "../tools/application";
 
 async function explorePage(albums, videos, moodsAndGenres) {
