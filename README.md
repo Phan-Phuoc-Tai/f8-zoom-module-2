@@ -11,3 +11,5 @@
 12/17 20:40 : commit-6th: deploy vercel, validation input form, register, giao diện homePage(update lời chào, nghe gần đây), header(update avatar default), logout, show/remove Loading, hiệu ứng trượt scroll khi click vào next/previous btn
 
 12/18 20:25 : commit-7th: giao diện explorePage, playList, song, event showFooter, play audio, drag progressBar,
+
+12/18 20:30 : commit-8th: sửa lỗi cú pháp ở file playSong.js

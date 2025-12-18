@@ -117,7 +117,7 @@ export const playSong = {
     durationEl.innerText = format.timeTrack(this._duration);
 
     thumb.src = data.thumbnails;
-    title = data.title;
+    title.innerText = data.title;
   },
 
   controlSong(audio) {
