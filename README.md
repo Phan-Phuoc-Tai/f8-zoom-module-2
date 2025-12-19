@@ -12,4 +12,6 @@
 
 12/18 20:25 : commit-7th: giao diện explorePage, playList, song, event showFooter, play audio, drag progressBar,
 
-12/18 20:30 : commit-8th: sửa lỗi cú pháp ở file playSong.js
+12/18 20:30 : commit-8th: sửa lỗi cú pháp ở file playSong.js, sửa lại link component videoList
+
+12/19 22:00 : commit-9th: autoPlay, playTrack, progressBar(update sync audio.currentTime), changeProfile, changePassword, search(tìm và trả về kết quả, xoá keyword), searchPage

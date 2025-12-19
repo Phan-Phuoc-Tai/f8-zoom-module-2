@@ -1,6 +1,6 @@
 export const formLogin = () => {
   return `
-  <div class="js-login flex flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500  opacity-100 visible ">
+  <div class="js-login flex flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500 opacity-100 visible ">
     <h2
                     class="w-full mb-6 text-xl text-center font-semibold uppercase"
                   >

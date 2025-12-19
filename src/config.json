@@ -14,7 +14,9 @@
     }
   ],
   "playlist" : "/playlist",
-  "songs":"/songs"
-  
+  "albums":"/albums",
+  "songs":"/songs/details/",
+  "searchKeyWord": "/search/suggestions?q=",
+  "albumsLimit": "50"
   
 }

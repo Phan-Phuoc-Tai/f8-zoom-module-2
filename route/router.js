@@ -6,8 +6,10 @@ import { eventApp } from "../src/tools/application";
 import httpRequest from "../src/tools/httpRequest";
 import playListsDetailsPage from "../src/pages/playListDetailsPage";
 import explorePage from "../src/pages/explorePage";
-import { playSong } from "../src/tools/playSong";
 import songsDetailsPage from "../src/pages/songsDetailsPage";
+import { track } from "../src/tools/track";
+import changeProfile from "../src/pages/changProfilePage";
+import searchPage from "../src/pages/searchPage";
 
 export const router = new Navigo("/");
 
@@ -52,6 +54,16 @@ function duplicateTrack(tracks) {
   return newTracks;
 }
 
+function assignType(list) {
+  return list.reduce((acc, item) => {
+    const type = item.type;
+    if (!acc[type]) {
+      acc[type] = [];
+    }
+    acc[type].push(item);
+    return acc;
+  }, {});
+}
 const initRouter = async () => {
   const pageContent = document.querySelector(".js-body");
 
@@ -93,6 +105,7 @@ const initRouter = async () => {
     .on("/login", async () => {
       pageContent.innerHTML = await loginPage();
       eventApp.init();
+      eventApp.hideFooter();
     })
     .on("/explore", async () => {
       eventApp.showLoading();
@@ -130,10 +143,26 @@ const initRouter = async () => {
       httpRequest.post(`/events/play`, { playlistId: playListInfos.id });
       pageContent.innerHTML = await playListsDetailsPage(playListInfos, tracks);
       eventApp.init(user);
-      playSong.init();
+      // playSong.init();
       router.updatePageLinks();
     })
-
+    .on("/albums/details/:slug", async () => {
+      eventApp.showLoading();
+      let user = await getProfile();
+      const locationHref = router.link(window.location.href);
+      const address = locationHref.slice(
+        locationHref.lastIndexOf(`${config.albums}`)
+      );
+      const albumsInfo = await getData(
+        `${address}?limit=${config.albumsLimit}`
+      );
+      const tracks = albumsInfo.tracks;
+      httpRequest.post(`/events/play`, { albumId: albumsInfo.id });
+      pageContent.innerHTML = await playListsDetailsPage(albumsInfo, tracks);
+      eventApp.init(user);
+      // playSong.init();
+      router.updatePageLinks();
+    })
     .on("/songs/details/:id", async () => {
       eventApp.showLoading();
       let user = await getProfile();
@@ -142,6 +171,8 @@ const initRouter = async () => {
         locationHref.lastIndexOf(`${config.songs}`)
       );
       const songsInfo = await getData(address);
+      console.log(songsInfo);
+
       const tracks = [
         ...songsInfo.album.tracks,
         ...songsInfo.playlists[0].tracks,
@@ -150,8 +181,43 @@ const initRouter = async () => {
       pageContent.innerHTML = await songsDetailsPage(songsInfo, newTracks);
       eventApp.init(user);
       eventApp.showFooter();
-      playSong.init();
+      track.autoPlay(newTracks[0]);
+      track.init();
       router.updatePageLinks();
+    })
+    .on("/auth/profile", async () => {
+      let user = await getProfile();
+      pageContent.innerHTML = await changeProfile();
+      eventApp.init(user);
+      eventApp.hideFooter();
+    })
+    .on("/auth/change-password", async () => {
+      let user = await getProfile();
+      pageContent.innerHTML = await changeProfile(true);
+      eventApp.init(user);
+      eventApp.hideFooter();
+    })
+    .on("/search?", async () => {
+      let user = await getProfile();
+      const locationHref = router.link(window.location.href);
+      const key = locationHref.slice(locationHref.lastIndexOf(`=`) + 1);
+      const response = await getData(`${config.searchKeyWord}${key}`);
+      const listCompleted = duplicateTrack(response.completed);
+      const listOfKey = assignType(listCompleted);
+      const [song, playlist, videos, albums] = [
+        listOfKey.song,
+        listOfKey.playlist,
+        listOfKey.video,
+        listOfKey.album,
+      ];
+      pageContent.innerHTML = await searchPage(
+        key,
+        song,
+        playlist,
+        videos,
+        albums
+      );
+      eventApp.init(user);
     })
     .resolve();
 };

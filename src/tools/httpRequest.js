@@ -24,7 +24,6 @@ export const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     router.navigate("/login");
-    notice.showSuccess("Đăng xuất thành công!");
   } catch (e) {
     notice.showError(e.message);
   } finally {
@@ -75,7 +74,10 @@ httpRequest.interceptors.response.use(
         return httpRequest(error.config);
       } else {
         //logout
+        notice.showSuccess("Phiên đăng nhập hết hạn!");
         logout();
+        notice.hideNotice(2000);
+        eventApp.removeLoading();
       }
     }
     return Promise.reject(error);

@@ -1,6 +1,5 @@
 export default function header() {
-  return `
-  <header class="header">
+  return `<header class="header">
         <nav class="flex items-center gap-0.5 px-4 py-3.5 bg-[#030303]/90">
           <div class="flex items-center ml-2 gap-3">
             <div
@@ -24,7 +23,7 @@ export default function header() {
           </div>
           <div class="flex justify-between items-center gap-5 w-full">
             <div
-              class="flex items-center justify-center mr-auto lg:w-118 px-4 py-1 bg-[#292929]/80"
+              class="js-search relative flex items-center justify-center mr-auto lg:w-118 px-4 py-1 bg-[#292929]/80"
             >
               <button
                 class="fa-solid fa-magnifying-glass text-white/70 cursor-pointer select-none"
@@ -32,12 +31,27 @@ export default function header() {
               <input
                 type="text"
                 placeholder="Tìm bài hát, đĩa nhạc, nghệ sĩ"
-                class="px-3 py-2 outline-none w-full text-white"
+                spellcheck="false"
+                class="js-search-input px-3 py-2 outline-none w-full text-white"
               />
-              <button class="text-white cursor-pointer select-none hidden">
+              <button class="js-clear-search text-white hover:text-red-500 cursor-pointer select-none hidden">
                 <i class="fa-solid fa-xmark"></i>
               </button>
+              <div class= "js-search-space absolute top-13 left-0 z-300 rounded-lg w-118 bg-[#121212] invisible opacity-0 transition-all duration-300">
+                <div class="js-suggestions p-2 border-b border-white/30">
+                  <h4 class="text-white/60">Gợi ý</h4>
+                  <ul class="js-suggest-list p-1">
+                   
+                  </ul>
+                </div>
+                <div class="js-results p-2">
+                  <h4 class="text-white/60">Kết quả</h4>
+                  <ul class="js-result-list p-1">
+                  </ul>
+                </div>
+              </div>
             </div>
+
             <div class="text-white/90 text-xl">
               <button
                 class="p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
@@ -56,6 +70,5 @@ export default function header() {
             
           </div>
         </nav>
-      </header>
-  `;
+      </header>`;
 }

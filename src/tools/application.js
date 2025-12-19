@@ -1,9 +1,15 @@
 import { router } from "../../route/router";
+import quickPick from "../components/quickPick";
 import { auth } from "./authentication";
-import { logout } from "./httpRequest";
+import httpRequest, { logout } from "./httpRequest";
+import { notice } from "./notice";
 
 //Tất cả sự kiện của trang
 export const eventApp = {
+  _query: {
+    q: "",
+  },
+
   init(user) {
     this.formEvent();
     this.showSideBarModal();
@@ -12,6 +18,8 @@ export const eventApp = {
     this.updateProfile(user);
     this.hideLoginSideBar(user);
     this.showOptions();
+    this.hideOptions();
+    this.search();
     this.controlScroll();
   },
 
@@ -26,14 +34,14 @@ export const eventApp = {
       "w-12 h-12 border-4 border-neutral-600 rounded-[50%] border-t-white animate-spin";
     loading.append(space);
     space.append(spin);
-    body.classList.toggle("h-screen");
+    body.classList.add("h-screen", "fixed", "inset-0", "bg-[#0a1a2f]");
   },
   removeLoading(timeout = 0) {
     const loading = document.querySelector(".js-loading");
     const body = document.querySelector(".js-body");
     setTimeout(() => {
       loading.firstElementChild.remove();
-      body.classList.toggle("h-screen");
+      body.classList.remove("h-screen", "fixed", "inset-0", "bg-[#0a1a2f]");
     }, timeout);
     return "";
   },
@@ -48,6 +56,8 @@ export const eventApp = {
     const registerBtnEl = document.querySelector(".js-register-btn");
     const emailLoginEl = document.querySelector(".js-email");
     const emailRegisterEl = document.querySelector(".js-email-register");
+    const changProfileBtnEl = document.querySelector(".js-change-profile");
+    const changePasswordBtnEl = document.querySelector(".js-change-password");
     if (goRegisterEl) {
       goRegisterEl.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -67,6 +77,14 @@ export const eventApp = {
     }
     if (registerBtnEl) {
       registerBtnEl.onclick = auth.handleRegister();
+    }
+
+    if (changProfileBtnEl) {
+      changProfileBtnEl.onclick = auth.handleChangeProfile();
+    }
+
+    if (changePasswordBtnEl) {
+      changePasswordBtnEl.onclick = auth.handleChangePassword();
     }
   },
   handleFormToggle(showElement, hideElement) {
@@ -128,7 +146,6 @@ export const eventApp = {
       };
     });
   },
-
   hideLoginSideBar(user) {
     const ulSideBar = document.querySelector(".side-bar-desktop ul");
     const ulModal = document.querySelector(".side-bar-modal ul");
@@ -148,6 +165,7 @@ export const eventApp = {
       vipModal.classList.remove("hidden");
     }
   },
+
   //sideBar: End
   /*===================================================*/
   //header <updateProfile>, <showOptions>: Begin
@@ -163,10 +181,10 @@ export const eventApp = {
         </button>
         <ul class="options absolute right-10 mt-2 w-52 rounded-xl overflow-hidden bg-[#1f1f1f] shadow-lg border border-white/10 text-white transition-all duration-150 z-50 opacity-0 invisible translate-y-2 cursor-pointer">
           <li>
-            <a href="/auth/profile" class="block px-4 py-3 text-sm hover:bg-white/10 transition">Thông tin người dùng</a>
+            <a href="/auth/profile" data-navigo class="block px-4 py-3 text-sm hover:bg-white/10 transition">Thông tin người dùng</a>
           </li>
           <li>
-            <a href="/auth/change-password" class="block px-4 py-3 text-sm hover:bg-white/10 transition">Đổi mật khẩu</a>
+            <a href="/auth/change-password"  data-navigo class="block px-4 py-3 text-sm hover:bg-white/10 transition">Đổi mật khẩu</a>
           </li> 
           <li>
             <a class="js-logout-btn block px-4 py-3 text-sm text-red-400 hover:bg-white/10 transition">Đăng xuất</a>
@@ -189,6 +207,7 @@ export const eventApp = {
     const options = profile.querySelector(".options");
     if (options) {
       profile.addEventListener("click", (e) => {
+        e.stopPropagation();
         options.classList.toggle("invisible");
         options.classList.toggle("opacity-0");
         options.classList.toggle("translate-y-2");
@@ -200,14 +219,118 @@ export const eventApp = {
       const logoutBtn = options.querySelector(".js-logout-btn");
       logoutBtn.onclick = (e) => {
         e.stopPropagation();
+        notice.showSuccess("Đăng xuất thành công!");
         logout();
       };
     }
   },
+  hideOptions() {
+    const profile = document.querySelector(".user-profile");
+    const options = profile.querySelector(".options");
+    document.addEventListener("click", () => {
+      if (
+        options.classList.contains("visible") &&
+        options.classList.contains("translate-y-0")
+      ) {
+        options.classList.remove("visible", "opacity-100", "translate-y-0");
+        options.classList.add("invisible", "opacity-0", "translate-y-2");
+      }
+    });
+  },
+  search() {
+    const searchBtn = document.querySelector(".js-search-input");
+    const searchSpace = document.querySelector(".js-search-space");
+    const clearSearch = document.querySelector(".js-clear-search");
+    const suggestList = document.querySelector(".js-suggest-list");
+
+    searchBtn.addEventListener(
+      "input",
+      this.debounce(async (e) => {
+        const keyword = e.target.value;
+        this._query.q = keyword;
+
+        if (keyword) {
+          clearSearch.classList.remove("hidden");
+          const response = await httpRequest.get(
+            `/search/suggestions?q=${this._query.q}`
+          );
+          searchSpace.classList.remove("invisible", "opacity-0");
+          searchSpace.classList.add("visible", "opacity-100");
+          this.showSearchItems(response.data, searchSpace);
+          const suggestionList = suggestList.childNodes;
+          suggestionList.forEach((suggest) => {
+            suggest.onclick = async () => {
+              searchBtn.value = suggest.innerText;
+              this._query.q = suggest.innerTex;
+              const response = await httpRequest.get(
+                `/search/suggestions?q=${searchBtn.value}`
+              );
+              this.showSearchItems(response.data, searchSpace);
+            };
+          });
+
+          searchBtn.addEventListener("keydown", (e) => {
+            const isEnter = e.key === "Enter" ? true : false;
+            if (isEnter) {
+              this.redirectSearchPage(this._query.q);
+              this.hideSearchSpace(null, searchSpace);
+              searchBtn.blur();
+            }
+          });
+        } else {
+          this.hideSearchSpace(clearSearch, searchSpace);
+        }
+        clearSearch.onclick = () => {
+          searchBtn.value = "";
+          this.hideSearchSpace(clearSearch, searchSpace);
+        };
+      })
+    );
+  },
+  showSearchItems(data, searchSpace) {
+    const suggestList = document.querySelector(".js-suggest-list");
+    const resultList = document.querySelector(".js-result-list");
+    const suggestionsData = data.suggestions;
+    const resultsData = data.completed;
+
+    const suggestions = suggestionsData
+      .map((suggestion) => {
+        return `<li class=" p-2 text-white text-sm rounded-md hover:bg-white/10 cursor-pointer">${suggestion}</li>`;
+      })
+      .join("");
+
+    if (suggestionsData.length && resultsData.length) {
+      suggestList.innerHTML = suggestions;
+      resultList.innerHTML = quickPick("", resultsData, true, true);
+    } else {
+      searchSpace.innerHTML = `<h4 class=" p-4 text-white/80 rounded-md ">Không tìm thấy kết quả</h4>`;
+    }
+  },
+  hideSearchSpace(clearSearch, searchSpace) {
+    if (clearSearch) {
+      clearSearch.classList.add("hidden");
+    }
+    searchSpace.classList.add("invisible", "opacity-0");
+    searchSpace.classList.remove("visible", "opacity-100");
+  },
+  debounce(callback, timeout = 500) {
+    let id;
+    return (...args) => {
+      if (id) {
+        clearTimeout(id);
+      }
+      id = setTimeout(() => {
+        callback.apply(null, args);
+      }, timeout);
+    };
+  },
+  redirectSearchPage(key) {
+    const url = `keyword=${key}`;
+    router.navigate(`/search?${url}`);
+  },
 
   //header <updateProfile>, <showOptions>: End
   /*===================================================*/
-
   //content : Begin
   controlScroll() {
     const xScrolls = document.querySelectorAll(".js-xScroll");
@@ -243,11 +366,17 @@ export const eventApp = {
     });
   },
 
-  setActiveTrack() {},
   //content : End
-
+  /*===================================================*/
+  //footer : Begin
   showFooter() {
     const footerEl = document.querySelector(".js-footer");
     footerEl.classList.remove("hidden");
   },
+
+  hideFooter() {
+    const footerEl = document.querySelector(".js-footer");
+    footerEl.classList.add("hidden");
+  },
+  //footer : End
 };

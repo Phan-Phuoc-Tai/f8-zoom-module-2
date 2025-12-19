@@ -1,6 +1,6 @@
 export const formRegister = () => {
   return `
-    <div class="js-register flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500   opacity-0 invisible hidden ">
+    <div class="js-register flex-col items-center p-10 w-full rounded-lg bg-white/20 text-white transition-all duration-500 opacity-0 invisible hidden ">
       <h2
                     class="w-full mb-6 text-xl text-center font-semibold uppercase"
                   >
@@ -27,6 +27,7 @@ export const formRegister = () => {
                         type="text"
                         placeholder="Tên hiển thị của bạn"
                         name="username"
+                        spellcheck="false"
                         class="js-username w-full outline-0 border border-neutral-500 px-4 py-2 rounded-md bg-white/70 text-gray-600 focus:outline-2 focus:outline-black focus:border-black"
                       />
                     </label>

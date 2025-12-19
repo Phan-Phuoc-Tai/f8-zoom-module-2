@@ -89,6 +89,7 @@ export const playSong = {
       });
     });
   },
+
   async getSongData(address) {
     const response = await httpRequest.get(address);
     return response.data;

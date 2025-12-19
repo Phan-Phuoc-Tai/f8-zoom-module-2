@@ -19,8 +19,8 @@ const validation = {
     return { type: true };
   },
 
-  password(str) {
-    const minLength = 6;
+  password(str, isRegister = true) {
+    const minLength = 8;
 
     if (this.sanitizeText(str).trim() === "") {
       return {
@@ -29,11 +29,24 @@ const validation = {
       };
     }
 
-    if (this.sanitizeText(str).length < minLength) {
-      return {
-        type: false,
-        message: "Mật khẩu có ít nhất 6 ký tự",
-      };
+    if (isRegister) {
+      if (this.sanitizeText(str).length < minLength) {
+        return {
+          type: false,
+          message: `Mật khẩu có ít nhất ${minLength} ký tự`,
+        };
+      }
+
+      if (
+        !/[a-z]/.test(this.sanitizeText(str)) ||
+        !/[A-Z]/.test(this.sanitizeText(str)) ||
+        !/[0-9]/.test(this.sanitizeText(str))
+      ) {
+        return {
+          type: false,
+          message: `Mật khẩu phải có ít nhất 1 ký tự in hoa, in thường và số!`,
+        };
+      }
     }
     return { type: true };
   },

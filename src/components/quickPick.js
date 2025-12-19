@@ -1,7 +1,12 @@
 import section from "./section";
 import templateContent from "./templateContent";
 
-export default function quickPick(title, items, isPersonalized = false, type) {
+export default function quickPick(
+  title,
+  items,
+  isPersonalized = false,
+  isResult = false
+) {
   const html = items
     .map((item) => {
       const link = isPersonalized
@@ -19,12 +24,24 @@ export default function quickPick(title, items, isPersonalized = false, type) {
           />
           <i class="absolute fa-solid fa-play text-white invisible"></i>
         </div>
-        <div>
+        <div> 
           <h3 class="text-white font-semibold">${item.title}</h3>
+
           <div class="flex items-center gap-2 text-[14px]">
-            <span class="text-white/60">${item.artists}</span>
-            <span class="text-white/60">•</span>
-            <span class="text-white/60">${item.popularity} lượt nghe</span>
+            ${
+              !isResult
+                ? item.artists
+                  ? `<span class="text-white/60">${item.artists}</span>`
+                  : `<span class="text-white/60">0 lượt xem</span>`
+                : `<span class="text-white/60">${item.subtitle}</span>`
+            }
+
+            ${
+              !isResult
+                ? `<span class="text-white/60">•</span>
+            <span class="text-white/60">${item.popularity} lượt nghe</span>`
+                : ""
+            }
           </div>
         </div>
       </a>
@@ -33,6 +50,9 @@ export default function quickPick(title, items, isPersonalized = false, type) {
     })
     .join("");
 
-  const content = templateContent(html, true);
-  return section(title, content);
+  if (!isResult) {
+    const content = templateContent(html, true);
+    return section(title, content);
+  }
+  return html;
 }

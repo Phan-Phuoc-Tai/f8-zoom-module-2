@@ -2,7 +2,7 @@ import { format } from "../tools/format";
 
 function songDetails(songInfos) {
   const duration = format.timeTrack(songInfos.duration);
-  return `<div class="sticky top-32 flex flex-col items-center gap-5">
+  return `<div class="js-track-info sticky top-32 flex flex-col items-center gap-5">
                 <div class="w-100 h-100 rounded-xl overflow-hidden">
                   <img
                     src=${songInfos.thumbnails}
