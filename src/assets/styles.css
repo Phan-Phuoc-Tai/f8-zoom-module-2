@@ -4,7 +4,6 @@
 body {
   font-family: "Roboto";
   background-image: linear-gradient(160deg, #050a12, #0a1a2f, #112e42, #1b2f4a);
-  background-repeat: no-repeat;
   background-size: cover;
   overscroll-behavior: none;
 }

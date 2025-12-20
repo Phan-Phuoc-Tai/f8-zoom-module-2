@@ -29,7 +29,7 @@ export const eventApp = {
     const spin = document.createElement("div");
     const space = spin.cloneNode(true);
     space.className =
-      "fixed inset-0 z-10000 backdrop-blur-xl bg-white/30 flex items-center justify-center";
+      "fixed inset-0 z-10000 backdrop-blur-lg bg-white/30 flex items-center justify-center";
     spin.className =
       "w-12 h-12 border-4 border-neutral-600 rounded-[50%] border-t-white animate-spin";
     loading.append(space);
@@ -40,7 +40,10 @@ export const eventApp = {
     const loading = document.querySelector(".js-loading");
     const body = document.querySelector(".js-body");
     setTimeout(() => {
-      loading.firstElementChild.remove();
+      const childList = loading.childNodes;
+      childList.forEach((child) => {
+        child.remove();
+      });
       body.classList.remove("h-screen", "fixed", "inset-0", "bg-[#0a1a2f]");
     }, timeout);
     return "";
@@ -261,7 +264,8 @@ export const eventApp = {
           suggestionList.forEach((suggest) => {
             suggest.onclick = async () => {
               searchBtn.value = suggest.innerText;
-              this._query.q = suggest.innerTex;
+              this._query.q = suggest.innerText;
+              searchBtn.focus();
               const response = await httpRequest.get(
                 `/search/suggestions?q=${searchBtn.value}`
               );
@@ -272,9 +276,13 @@ export const eventApp = {
           searchBtn.addEventListener("keydown", (e) => {
             const isEnter = e.key === "Enter" ? true : false;
             if (isEnter) {
+              this.showLoading();
               this.redirectSearchPage(this._query.q);
               this.hideSearchSpace(null, searchSpace);
               searchBtn.blur();
+              this.removeLoading(300);
+            } else {
+              return;
             }
           });
         } else {
@@ -283,15 +291,30 @@ export const eventApp = {
         clearSearch.onclick = () => {
           searchBtn.value = "";
           this.hideSearchSpace(clearSearch, searchSpace);
+          searchBtn.focus();
         };
       })
     );
   },
   showSearchItems(data, searchSpace) {
+    const suggestionsEl = document.querySelector(".js-suggestions");
+    const resultsEl = document.querySelector(".js-results");
     const suggestList = document.querySelector(".js-suggest-list");
     const resultList = document.querySelector(".js-result-list");
+    const noResult = searchSpace.querySelector(".no-result");
     const suggestionsData = data.suggestions;
     const resultsData = data.completed;
+    if (noResult) {
+      noResult.remove();
+    }
+
+    if (
+      suggestionsEl.classList.contains("hidden") ||
+      resultsEl.classList.contains("hidden")
+    ) {
+      suggestionsEl.classList.remove("hidden");
+      resultsEl.classList.remove("hidden");
+    }
 
     const suggestions = suggestionsData
       .map((suggestion) => {
@@ -303,7 +326,12 @@ export const eventApp = {
       suggestList.innerHTML = suggestions;
       resultList.innerHTML = quickPick("", resultsData, true, true);
     } else {
-      searchSpace.innerHTML = `<h4 class=" p-4 text-white/80 rounded-md ">Không tìm thấy kết quả</h4>`;
+      const noResult = document.createElement("h4");
+      noResult.classList.add("no-result", "p-4", "text-white/80", "rounded-md");
+      noResult.innerText = `Không tìm thấy kết quả`;
+      suggestionsEl.classList.add("hidden");
+      resultsEl.classList.add("hidden");
+      searchSpace.prepend(noResult);
     }
   },
   hideSearchSpace(clearSearch, searchSpace) {
@@ -351,21 +379,51 @@ export const eventApp = {
         nextBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           xScroll.scrollLeft += 512;
+
           previousBtn.classList.remove("pointer-events-none", "text-white/30");
           previousBtn.classList.add(
             "cursor-pointer",
             "text-white",
             "hover:bg-white/20"
           );
+
+          if (
+            xScroll.scrollLeft + 512 + xScroll.offsetWidth >=
+            xScrollScrollWidth
+          ) {
+            nextBtn.classList.add("pointer-events-none", "text-white/30");
+            nextBtn.classList.remove(
+              "cursor-pointer",
+              "text-white",
+              "hover:bg-white/20"
+            );
+          }
         });
         previousBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           xScroll.scrollLeft -= 512;
+          console.log(xScroll.scrollLeft);
+
+          if (xScroll.scrollLeft <= 512) {
+            previousBtn.classList.add("pointer-events-none", "text-white/30");
+            previousBtn.classList.remove(
+              "cursor-pointer",
+              "text-white",
+              "hover:bg-white/20"
+            );
+          } else {
+            nextBtn.classList.remove("pointer-events-none", "text-white/30");
+            nextBtn.classList.add(
+              "cursor-pointer",
+              "text-white",
+              "hover:bg-white/20"
+            );
+          }
         });
       }
     });
   },
-
+  //Khi nhấn  vào thanh trượt, nếu scrollLeft = 0 thì ẩn previous, nếu
   //content : End
   /*===================================================*/
   //footer : Begin

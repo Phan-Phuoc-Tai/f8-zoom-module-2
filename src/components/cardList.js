@@ -24,7 +24,7 @@ export default function cardList(title, items) {
                     ${item.title ?? item.name}
                   </h3>
                   <p class="text-[14px] text-white/60">
-                  ${item.artists ?? item.albumType}</p>
+                  ${item.artists ?? item.albumType ?? ""}</p>
                 </div>
               </a>
             </li>

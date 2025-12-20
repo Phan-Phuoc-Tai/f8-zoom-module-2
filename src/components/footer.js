@@ -15,7 +15,7 @@ export const footer = () => {
               </div>
             </div>
             <div
-              class="player flex items-center justify-between px-4 py-2 bg-neutral-800"
+              class="js-player player flex items-center justify-between px-4 py-2 bg-neutral-800"
             >
               <div class="left-player flex items-center gap-3">
                 <div class="player-control flex items-center gap-3 text-white">
@@ -77,19 +77,25 @@ export const footer = () => {
                   </button>
                 </div>
               </div>
+              
               <div class="right-player flex items-center gap-6">
+                <div class="group volume-group relative flex items-center ">
+                  <div class=" absolute right-10 flex items-center px-2 py-1 rounded-lg shadow-lg bg-neutral-700 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition duration-200">
+                    <input type="range" min="0" max="100" value="10" class="volume-control w-32 accent-white cursor-pointer">
+                  </div>
+                  <button
+                    class="p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer "
+                  >
+                    <i class="volume-btn fa-solid fa-volume-low"></i>
+                  </button>
+                </div>
                 <button
-                  class="p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer"
-                >
-                  <i class="fa-solid fa-volume-high"></i>
-                </button>
-                <button
-                  class="p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer"
+                  class="repeat-btn p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer"
                 >
                   <i class="fa-solid fa-repeat"></i>
                 </button>
                 <button
-                  class="p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer"
+                  class="shuffle-btn p-2 text-white text-xl hover:bg-white/20 hover:rounded-full cursor-pointer"
                 >
                   <i class="fa-solid fa-shuffle"></i>
                 </button>

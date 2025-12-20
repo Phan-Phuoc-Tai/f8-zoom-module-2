@@ -1,3 +1,4 @@
+import { format } from "../tools/format";
 import section from "./section";
 import templateContent from "./templateContent";
 
@@ -39,7 +40,9 @@ export default function quickPick(
             ${
               !isResult
                 ? `<span class="text-white/60">•</span>
-            <span class="text-white/60">${item.popularity} lượt nghe</span>`
+            <span class="text-white/60">${format.views(
+              item.popularity
+            )} lượt nghe</span>`
                 : ""
             }
           </div>

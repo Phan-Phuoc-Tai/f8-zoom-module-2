@@ -10,6 +10,7 @@ import songsDetailsPage from "../src/pages/songsDetailsPage";
 import { track } from "../src/tools/track";
 import changeProfile from "../src/pages/changProfilePage";
 import searchPage from "../src/pages/searchPage";
+import albumsDetailsPage from "../src/pages/albumsDetailsPage";
 
 export const router = new Navigo("/");
 
@@ -28,8 +29,8 @@ async function getProfile() {
 }
 
 function mutateItems(data, size = 4) {
-  const items = [];
-  items.push(data.categories, data.lines);
+  const items = data;
+  // items.push(data.categories, data.lines);
   return items.flat(Infinity).reduce(
     (acc, item) => {
       if (acc[acc.length - 1].length < size) {
@@ -44,12 +45,15 @@ function mutateItems(data, size = 4) {
 }
 
 function duplicateTrack(tracks) {
-  const tracksTitle = tracks.map((track) => track.id);
-  const indexTitleDuplicate = tracksTitle.findIndex((item, index) => {
-    return tracksTitle.indexOf(item) !== index;
+  const tracksId = tracks.map((track) => track.id);
+  const duplicatesIndex = [];
+  tracksId.filter((id, index) => {
+    if (tracksId.indexOf(id) !== index) {
+      duplicatesIndex.push(index);
+    }
   });
   const newTracks = tracks.filter((track, index) => {
-    return tracks.indexOf(tracks[indexTitleDuplicate]) !== index;
+    return !duplicatesIndex.includes(index);
   });
   return newTracks;
 }
@@ -121,7 +125,7 @@ const initRouter = async () => {
         getData(sectionExplore.videos),
         getData(sectionExplore.meta),
       ]);
-      const moodsAndGenres = mutateItems(meta);
+      const moodsAndGenres = mutateItems([meta.categories, meta.lines]);
       pageContent.innerHTML = await explorePage(
         albums.items,
         videos.items,
@@ -130,7 +134,6 @@ const initRouter = async () => {
       eventApp.init(user);
       router.updatePageLinks();
     })
-
     .on("/playlists/details/:slug", async () => {
       eventApp.showLoading();
       let user = await getProfile();
@@ -143,7 +146,7 @@ const initRouter = async () => {
       httpRequest.post(`/events/play`, { playlistId: playListInfos.id });
       pageContent.innerHTML = await playListsDetailsPage(playListInfos, tracks);
       eventApp.init(user);
-      // playSong.init();
+
       router.updatePageLinks();
     })
     .on("/albums/details/:slug", async () => {
@@ -157,10 +160,10 @@ const initRouter = async () => {
         `${address}?limit=${config.albumsLimit}`
       );
       const tracks = albumsInfo.tracks;
+
       httpRequest.post(`/events/play`, { albumId: albumsInfo.id });
-      pageContent.innerHTML = await playListsDetailsPage(albumsInfo, tracks);
+      pageContent.innerHTML = await albumsDetailsPage(albumsInfo, tracks);
       eventApp.init(user);
-      // playSong.init();
       router.updatePageLinks();
     })
     .on("/songs/details/:id", async () => {
@@ -171,12 +174,15 @@ const initRouter = async () => {
         locationHref.lastIndexOf(`${config.songs}`)
       );
       const songsInfo = await getData(address);
-      console.log(songsInfo);
+      const tracks =
+        songsInfo.album.tracks.length > songsInfo.related.length
+          ? [
+              ...songsInfo.album.tracks,
+              ...songsInfo.playlists[0].tracks,
+              ...songsInfo.related,
+            ]
+          : [...songsInfo.related];
 
-      const tracks = [
-        ...songsInfo.album.tracks,
-        ...songsInfo.playlists[0].tracks,
-      ];
       const newTracks = duplicateTrack(tracks);
       pageContent.innerHTML = await songsDetailsPage(songsInfo, newTracks);
       eventApp.init(user);
@@ -210,6 +216,7 @@ const initRouter = async () => {
         listOfKey.video,
         listOfKey.album,
       ];
+
       pageContent.innerHTML = await searchPage(
         key,
         song,

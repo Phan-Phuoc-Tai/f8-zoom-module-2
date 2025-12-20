@@ -1,3 +1,4 @@
+import { format } from "../tools/format";
 import section from "./section";
 import templateContent from "./templateContent";
 
@@ -21,11 +22,13 @@ function videoList(title, items) {
       </div>
       <div>
         <h3 class="text-white font-semibold">
-          ${item.name}
+          ${item.name ?? item.title}
         </h3>
-        <p class="text-[14px] text-white/60">${Math.floor(
-          item.views / 1000
-        )} N lượt xem</p>
+        <p class="text-[14px] text-white/60">${
+          item.views
+            ? `${format.views(item.views)}`
+            : `${format.views(item.popularity)}`
+        } lượt xem</p>
       </div>
     </a>
   </li>
