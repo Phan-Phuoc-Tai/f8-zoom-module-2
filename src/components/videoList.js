@@ -5,7 +5,11 @@ import templateContent from "./templateContent";
 function videoList(title, items) {
   const html = items
     .map((item) => {
-      const link = `${item.type ?? "video"}s/details/${item.slug}`;
+      const link = `${
+        item.type
+          ? `${item.type}s/details/${item.slug}`
+          : `videos/details/${item.id}`
+      }`;
 
       return `<li>
     <a href=${link} data-navigo class="flex flex-col gap-4 px-3 py-2 rounded-md">

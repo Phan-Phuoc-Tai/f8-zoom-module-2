@@ -8,8 +8,15 @@ export const format = {
   },
 
   timeTrack(duration) {
-    const minus = Math.floor(duration / 60);
-    const second = Math.floor(duration - minus * 60);
+    const hour = Math.floor(duration / 3600);
+    const minus = Math.floor((duration - hour * 3600) / 60);
+    const second = Math.floor(duration - hour * 3600 - minus * 60);
+
+    if (hour > 0) {
+      return `${hour < 10 ? "0" + hour : hour}:${
+        minus < 10 ? "0" + minus : minus
+      }:${second < 10 ? "0" + second : second}`;
+    }
     return `${minus < 10 ? "0" + minus : minus}:${
       second < 10 ? "0" + second : second
     }`;

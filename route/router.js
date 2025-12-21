@@ -11,6 +11,9 @@ import { track } from "../src/tools/track";
 import changeProfile from "../src/pages/changProfilePage";
 import searchPage from "../src/pages/searchPage";
 import albumsDetailsPage from "../src/pages/albumsDetailsPage";
+import newReleasesPage from "../src/pages/newReleasesPage";
+import videosDetailsPage from "../src/pages/videosDetailsPage";
+import controlVideo from "../src/tools/video";
 
 export const router = new Navigo("/");
 
@@ -104,12 +107,14 @@ const initRouter = async () => {
         user
       );
       eventApp.init(user);
+      eventApp.hideFooter(false);
       router.updatePageLinks();
     })
     .on("/login", async () => {
       pageContent.innerHTML = await loginPage();
       eventApp.init();
       eventApp.hideFooter();
+      eventApp.hideFooter(false);
     })
     .on("/explore", async () => {
       eventApp.showLoading();
@@ -132,6 +137,7 @@ const initRouter = async () => {
         moodsAndGenres
       );
       eventApp.init(user);
+      eventApp.hideFooter(false);
       router.updatePageLinks();
     })
     .on("/playlists/details/:slug", async () => {
@@ -146,24 +152,7 @@ const initRouter = async () => {
       httpRequest.post(`/events/play`, { playlistId: playListInfos.id });
       pageContent.innerHTML = await playListsDetailsPage(playListInfos, tracks);
       eventApp.init(user);
-
-      router.updatePageLinks();
-    })
-    .on("/albums/details/:slug", async () => {
-      eventApp.showLoading();
-      let user = await getProfile();
-      const locationHref = router.link(window.location.href);
-      const address = locationHref.slice(
-        locationHref.lastIndexOf(`${config.albums}`)
-      );
-      const albumsInfo = await getData(
-        `${address}?limit=${config.albumsLimit}`
-      );
-      const tracks = albumsInfo.tracks;
-
-      httpRequest.post(`/events/play`, { albumId: albumsInfo.id });
-      pageContent.innerHTML = await albumsDetailsPage(albumsInfo, tracks);
-      eventApp.init(user);
+      eventApp.hideFooter(false);
       router.updatePageLinks();
     })
     .on("/songs/details/:id", async () => {
@@ -174,19 +163,28 @@ const initRouter = async () => {
         locationHref.lastIndexOf(`${config.songs}`)
       );
       const songsInfo = await getData(address);
-      const tracks =
-        songsInfo.album.tracks.length > songsInfo.related.length
-          ? [
-              ...songsInfo.album.tracks,
-              ...songsInfo.playlists[0].tracks,
-              ...songsInfo.related,
-            ]
-          : [...songsInfo.related];
-
+      let tracks;
+      if (
+        songsInfo.album.tracks.length > songsInfo.related.length &&
+        songsInfo.playlists.length
+      ) {
+        tracks = [
+          ...songsInfo.album.tracks,
+          ...songsInfo.playlists[0].tracks,
+          ...songsInfo.related,
+        ];
+      }
+      if (!songsInfo.playlists.length) {
+        tracks = [...songsInfo.album.tracks, ...songsInfo.related];
+      }
+      if (songsInfo.album.tracks.length < songsInfo.related.length) {
+        tracks = [...songsInfo.related];
+      }
       const newTracks = duplicateTrack(tracks);
       pageContent.innerHTML = await songsDetailsPage(songsInfo, newTracks);
       eventApp.init(user);
-      eventApp.showFooter();
+      eventApp.showFooter(true);
+      eventApp.hideFooter(false);
       track.autoPlay(newTracks[0]);
       track.init();
       router.updatePageLinks();
@@ -196,12 +194,14 @@ const initRouter = async () => {
       pageContent.innerHTML = await changeProfile();
       eventApp.init(user);
       eventApp.hideFooter();
+      eventApp.hideFooter(false);
     })
     .on("/auth/change-password", async () => {
       let user = await getProfile();
       pageContent.innerHTML = await changeProfile(true);
       eventApp.init(user);
       eventApp.hideFooter();
+      eventApp.hideFooter(false);
     })
     .on("/search?", async () => {
       let user = await getProfile();
@@ -225,6 +225,61 @@ const initRouter = async () => {
         albums
       );
       eventApp.init(user);
+      eventApp.hideFooter(false);
+    })
+    .on("/albums/details/:slug", async () => {
+      eventApp.showLoading();
+      let user = await getProfile();
+      const locationHref = router.link(window.location.href);
+      const address = locationHref.slice(
+        locationHref.lastIndexOf(`${config.albums}`)
+      );
+      const albumsInfo = await getData(
+        `${address}?limit=${config.albumsLimit}`
+      );
+      const tracks = albumsInfo.tracks;
+
+      httpRequest.post(`/events/play`, { albumId: albumsInfo.id });
+      pageContent.innerHTML = await albumsDetailsPage(albumsInfo, tracks);
+      eventApp.init(user);
+      router.updatePageLinks();
+    })
+    .on("/new-releases", async () => {
+      eventApp.showLoading();
+      let user = await getProfile();
+      const sectionReleases = {
+        releases: "/explore/new-releases",
+        videos: "/explore/videos",
+      };
+      const [releases, videos] = await Promise.all([
+        getData(sectionReleases.releases),
+        getData(sectionReleases.videos),
+      ]);
+      pageContent.innerHTML = await newReleasesPage(
+        releases.items,
+        videos.items
+      );
+      eventApp.init(user);
+      eventApp.hideFooter(false);
+      router.updatePageLinks();
+    })
+    .on("/videos/details/:id", async () => {
+      eventApp.showLoading();
+      let user = await getProfile();
+      const locationHref = router.link(window.location.href);
+      const address = locationHref.slice(
+        locationHref.lastIndexOf(`${config.videos}`)
+      );
+      const videoInfo = await getData(address);
+      const list = videoInfo.related;
+      const videoList = duplicateTrack(list);
+
+      pageContent.innerHTML = await videosDetailsPage(videoInfo, videoList);
+      eventApp.init(user);
+      eventApp.showFooter(false);
+      eventApp.hideFooter(true);
+      controlVideo();
+      router.updatePageLinks();
     })
     .resolve();
 };

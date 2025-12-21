@@ -1,14 +1,13 @@
-import templateDetails from "../components/templateDetails";
+import templateVideoDetails from "../components/templateVideos";
 import { eventApp } from "../tools/application";
 
-export default async function songsDetailsPage(playListInfos, tracks) {
+export default async function videosDetailsPage(videoInfo, videos) {
   return `<div class="content-container">
       <div class="p-2">
-        ${templateDetails(playListInfos, tracks, true)}
+        ${templateVideoDetails(videoInfo, videos)}
         ${eventApp.removeLoading()}
         
       </div>
     </div>
-  
     `;
 }

@@ -138,17 +138,40 @@ export const eventApp = {
   },
   sideBarActive() {
     const items = document.querySelectorAll(".side-bar-desktop ul li a");
-    items.forEach((item) => {
+    const itemModal = document.querySelectorAll(".side-bar-modal ul li a");
+    items.forEach((item, index) => {
       item.onclick = (e) => {
         e.stopPropagation();
         const itemActive = document.querySelector(
           ".side-bar-desktop ul li .active"
         );
+        const itemModalActive = document.querySelector(
+          ".side-bar-modal ul li .active"
+        );
         itemActive.classList.remove("active");
+        itemModalActive.classList.remove("active");
         item.classList.add("active");
+        itemModal[index].classList.add("active");
+      };
+    });
+
+    itemModal.forEach((item, index) => {
+      item.onclick = (e) => {
+        e.stopPropagation();
+        const itemActive = document.querySelector(
+          ".side-bar-desktop ul li .active"
+        );
+        const itemModalActive = document.querySelector(
+          ".side-bar-modal ul li .active"
+        );
+        itemActive.classList.remove("active");
+        itemModalActive.classList.remove("active");
+        item.classList.add("active");
+        items[index].classList.add("active");
       };
     });
   },
+
   hideLoginSideBar(user) {
     const ulSideBar = document.querySelector(".side-bar-desktop ul");
     const ulModal = document.querySelector(".side-bar-modal ul");
@@ -402,7 +425,6 @@ export const eventApp = {
         previousBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           xScroll.scrollLeft -= 512;
-          console.log(xScroll.scrollLeft);
 
           if (xScroll.scrollLeft <= 512) {
             previousBtn.classList.add("pointer-events-none", "text-white/30");
@@ -427,13 +449,23 @@ export const eventApp = {
   //content : End
   /*===================================================*/
   //footer : Begin
-  showFooter() {
-    const footerEl = document.querySelector(".js-footer");
+  showFooter(song = true) {
+    let footerEl;
+    if (song) {
+      footerEl = document.querySelector(".js-footer");
+    } else {
+      footerEl = document.querySelector(".js-footer-video");
+    }
     footerEl.classList.remove("hidden");
   },
 
-  hideFooter() {
-    const footerEl = document.querySelector(".js-footer");
+  hideFooter(song = true) {
+    let footerEl;
+    if (song) {
+      footerEl = document.querySelector(".js-footer");
+    } else {
+      footerEl = document.querySelector(".js-footer-video");
+    }
     footerEl.classList.add("hidden");
   },
   //footer : End

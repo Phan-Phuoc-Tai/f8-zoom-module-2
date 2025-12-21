@@ -17,3 +17,5 @@
 12/19 22:00 : commit-9th: autoPlay, playTrack, progressBar(update sync audio.currentTime), changeProfile, changePassword, search(tìm và trả về kết quả, xoá keyword), searchPage
 
 12/20 20:40 : commit-10th: searchPage(update url cho từng song, playlist, album),search(update tìm và trả về không có kết quả) , albumPage, enable/disable next/previous btn khi cuộn đến giới hạn, audio: play/pause, next/previous, repeat, shuffle.
+
+12/21 21:00 : commit-11th: videoDetails, new-releases, video: play/pause, next/previous, repeat, shuffle.

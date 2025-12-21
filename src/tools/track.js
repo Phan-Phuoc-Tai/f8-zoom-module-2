@@ -42,9 +42,7 @@ export const track = {
         this.showTrackInfo(trackInfoEl, trackInfo);
         track.classList.add("bg-white/20", "active");
         activeTrack.classList.remove("bg-white/20", "active");
-        window.scroll({ top: activeTrack.parentElement.offsetTop });
         eventApp.removeLoading();
-
         document.addEventListener("keydown", this.playAudio);
       });
     });
@@ -60,13 +58,14 @@ export const track = {
     const playerControl = leftPlayer.querySelector(".player-control");
     const playBtn = playerControl.querySelector(".play-btn i");
     const volumeControl = document.querySelector(".volume-control");
+
     audio.src = trackInfo.audioUrl;
     audio.preload = "metadata";
     progress.style.width = 0;
     audio.addEventListener("loadedmetadata", (e) => {
       this.showTrackDetail(playerEl, trackInfo, audio.duration);
-      audio.volume = volumeControl.defaultValue / 100;
       audio.play();
+      audio.volume = volumeControl.defaultValue / 100;
       document.addEventListener("keydown", this.playAudio);
       audio.addEventListener("play", () => {
         playBtn.classList.replace("fa-play", "fa-pause");
@@ -303,6 +302,7 @@ export const track = {
         }
       });
     });
+
     //rightPlayer: End
   },
 

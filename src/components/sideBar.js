@@ -82,7 +82,7 @@ export const sideBar = () => {
               <ul class="pt-4 pb-3 border-b border-white/70">
                 <li>
                   <a
-                    href="#!"
+                    href="/" data-navigo
                     class="flex items-center gap-4 p-3 mb-1 hover:bg-white/10 hover:rounded-2xl active"
                   >
                     <i class="fa-regular fa-house text-xl"></i>
@@ -91,7 +91,7 @@ export const sideBar = () => {
                 </li>
                 <li>
                   <a
-                    href="#!"
+                    href="/explore" data-navigo
                     class="flex items-center gap-4 p-3 mb-1 hover:bg-white/10 hover:rounded-2xl"
                   >
                     <i class="fa-regular fa-compass text-xl"></i>

@@ -60,7 +60,6 @@ httpRequest.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error);
     if (error.status === 401) {
       if (!refreshPromise) {
         refreshPromise = getNewToken();
