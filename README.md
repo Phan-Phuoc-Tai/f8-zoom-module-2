@@ -20,4 +20,4 @@
 
 12/21 21:00 : commit-11th: videoDetails, new-releases, video: play/pause, next/previous, repeat, shuffle.
 
-12/22 : logic rõ ràng, hanh thông, đầu óc nhanh nhạy
+12/22 20:20 : commit-12th: responsive all, searchMobile, show/hide actBtn rightControl

@@ -21,6 +21,7 @@ export const eventApp = {
     this.hideOptions();
     this.search();
     this.controlScroll();
+    this.showSearchMobile();
   },
 
   showLoading() {
@@ -139,6 +140,9 @@ export const eventApp = {
   sideBarActive() {
     const items = document.querySelectorAll(".side-bar-desktop ul li a");
     const itemModal = document.querySelectorAll(".side-bar-modal ul li a");
+    const sideBarModalEl = document.querySelector(".side-bar .side-bar-modal");
+    const modalInnerEl = sideBarModalEl.querySelector(".modal-inner");
+
     items.forEach((item, index) => {
       item.onclick = (e) => {
         e.stopPropagation();
@@ -168,6 +172,7 @@ export const eventApp = {
         itemModalActive.classList.remove("active");
         item.classList.add("active");
         items[index].classList.add("active");
+        this.hideModal(modalInnerEl, sideBarModalEl);
       };
     });
   },
@@ -380,6 +385,38 @@ export const eventApp = {
     router.navigate(`/search?${url}`);
   },
 
+  showSearchMobile() {
+    const searchEl = document.querySelector(".js-search");
+    const searchMobileBtn = document.querySelector(".js-search-mobile");
+    const hideMobileSearch = document.querySelector(".js-hide-search");
+    const searchBtn = document.querySelector(".js-search-input");
+    if (searchMobileBtn) {
+      searchMobileBtn.onclick = (e) => {
+        e.stopPropagation();
+        searchEl.classList.toggle("hidden");
+        searchEl.classList.toggle("flex");
+        searchEl.classList.toggle("showSearch");
+        searchBtn.classList.toggle("bg-neutral-600");
+        hideMobileSearch.classList.replace(
+          "fa-magnifying-glass",
+          "fa-arrow-left"
+        );
+      };
+    }
+    if (hideMobileSearch) {
+      hideMobileSearch.onclick = (e) => {
+        e.stopPropagation();
+        searchEl.classList.toggle("hidden");
+        searchEl.classList.toggle("flex");
+        searchEl.classList.toggle("showSearch");
+        searchBtn.classList.toggle("bg-neutral-600");
+        hideMobileSearch.classList.replace(
+          "fa-arrow-left",
+          "fa-magnifying-glass"
+        );
+      };
+    }
+  },
   //header <updateProfile>, <showOptions>: End
   /*===================================================*/
   //content : Begin
