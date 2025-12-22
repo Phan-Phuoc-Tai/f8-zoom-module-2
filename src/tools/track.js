@@ -241,6 +241,8 @@ export const track = {
     //=========================================
     //rightPlayer: Begin
     const rightPlayer = footerEl.querySelector(".right-player");
+    const actGroup = rightPlayer.firstElementChild;
+    const group = rightPlayer.querySelector(".group").firstElementChild;
     const volumeGroup = rightPlayer.querySelector(".volume-group");
     const volumeControl = volumeGroup.querySelector(".volume-control");
     const volumeBtn = volumeGroup.querySelector(".volume-btn");
@@ -248,6 +250,7 @@ export const track = {
     const repeatIcon = repeatBtn.querySelector("i");
     const shuffleBtn = rightPlayer.querySelector(".shuffle-btn");
     const shuffleIcon = shuffleBtn.querySelector("i");
+    const showActBtn = footerEl.querySelector(".show-act-btn");
     volumeControl.addEventListener("input", (e) => {
       e.stopPropagation();
       audio.volume = volumeControl.value / 100;
@@ -261,7 +264,13 @@ export const track = {
         volumeBtn.className = "volume-btn fa-solid fa-volume-xmark";
       }
     });
-
+    volumeBtn.onclick = (e) => {
+      e.stopPropagation();
+      group.classList.toggle("visible");
+      group.classList.toggle("invisible");
+      group.classList.toggle("opacity-100");
+      group.classList.toggle("opacity-0");
+    };
     repeatBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       if (shuffleBtn.classList.contains("active")) {
@@ -302,7 +311,12 @@ export const track = {
         }
       });
     });
+    showActBtn.onclick = (e) => {
+      e.stopPropagation();
 
+      actGroup.classList.toggle("hidden");
+      actGroup.classList.toggle("showAct");
+    };
     //rightPlayer: End
   },
 

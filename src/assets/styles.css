@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
-
+html {
+  overscroll-behavior: none;
+}
 body {
   font-family: "Roboto";
   background-image: linear-gradient(160deg, #050a12, #0a1a2f, #112e42, #1b2f4a);
   background-size: cover;
-  overscroll-behavior: none;
 }
 
 .header {
