@@ -1,7 +1,7 @@
 export default function header() {
   return `<header class="header">
         <nav class="flex items-center gap-0.5 px-4 py-3.5 bg-[#030303]/90">
-          <div class="flex items-center ml-2 gap-3">
+          <div class="flex items-center lg:ml-2 gap-1 lg:gap-3">
             <div
               class="side-bar-toggle p-3 text-xl text-white/90 hover:bg-white/30 hover:rounded-full cursor-pointer select-none"
             >
@@ -10,7 +10,7 @@ export default function header() {
             <div class="logo">
               <a
                 href="/" data-navigo
-                class="flex items-center w-max lg:mr-10 gap-1.5 px-3 py-1.5 cursor-pointer select-none"
+                class="flex items-center w-max mr-4 xl:mr-10 gap-1.5 px-0 lg:px-3 py-1.5 cursor-pointer select-none"
               >
                 <img
                   src="/images/logo.png"
@@ -23,7 +23,7 @@ export default function header() {
           </div>
           <div class="flex justify-between items-center gap-5 w-full">
             <div
-              class="js-search relative flex items-center justify-center mr-auto lg:w-118 px-4 py-1 bg-[#292929]/80"
+              class="js-search relative hidden md:flex items-center justify-center mr-auto w-75 lg:w-118 px-4 py-1 bg-[#292929]/80 rounded-md"
             >
               <button
                 class="fa-solid fa-magnifying-glass text-white/70 cursor-pointer select-none"
@@ -32,7 +32,7 @@ export default function header() {
                 type="text"
                 placeholder="Tìm bài hát, đĩa nhạc, nghệ sĩ"
                 spellcheck="false"
-                class="js-search-input px-3 py-2 outline-none w-full text-white"
+                class="js-search-input px-3 md:py-1 py-2 outline-none md:max-w-full w-full text-white"
               />
               <button class="js-clear-search text-white hover:text-red-500 cursor-pointer select-none hidden">
                 <i class="fa-solid fa-xmark"></i>
@@ -52,14 +52,18 @@ export default function header() {
               </div>
             </div>
 
-            <div class="text-white/90 text-xl">
+            <div class="ml-auto md:ml-0 text-white/90 text-xl">
+              <button class=" md:hidden p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
+              >
+              <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
               <button
-                class="p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
+                class="hidden sm:inline p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
               >
                 <i class="fa-brands fa-chromecast"></i>
               </button>
               <button
-                class="p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
+                class="hidden sm:inline p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
               >
                 <i class="fa-solid fa-ellipsis-vertical"></i>
               </button>

@@ -4,11 +4,11 @@ import { format } from "../tools/format";
 export default function details(infos, isPlaylist = true) {
   const duration = format.timeDetails(infos.duration);
   const songCount = `${infos.songCount} bài hát`;
-  return `<div class="sticky top-32 flex flex-col items-center gap-5">
-                <div class="w-100 h-100 rounded-xl overflow-hidden">
+  return `<div class="sticky top-32 flex flex-col items-center gap-2 sm:gap-5">
+                <div class="w-95 sm:w-90 xl:w-100 h-90 xl:h-100  rounded-xl overflow-hidden">
                   <img
                     src=${infos.thumbnails}
-                    class="w-100 h-100 object-cover"
+                    class="w-full h-90 xl:h-100 object-cover"
                   />
                 </div>
 

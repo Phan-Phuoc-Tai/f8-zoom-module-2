@@ -16,7 +16,7 @@ async function homePage(
     <div class="p-2">
       ${
         user
-          ? `<h2 class="mb-20 text-5xl font-semibold text-white">👋 Chào mừng <span>${user}</span></h2>`
+          ? `<h2 class="mb-20 text-4xl lg:text-5xl font-semibold text-white">👋 Chào mừng <span>${user}</span></h2>`
           : ""
       }
       ${tagList("", moods)}

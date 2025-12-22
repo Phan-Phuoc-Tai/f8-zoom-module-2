@@ -6,7 +6,7 @@ export default function propose() {
   let content = `
             <div class="relative">
               <nav>
-                <ul class="flex items-center gap-4 pb-14 justify-between">
+                <ul class="flex-col md:flex-row flex items-center gap-4 pb-4 md:pb-14 justify-between">
                 ${html}
                 </ul>
               </nav>
@@ -17,10 +17,10 @@ export default function propose() {
 
 function proposeDetail(tagName, address) {
   return `
-    <li class="w-[calc(100%/3)]">
+    <li class="w-full md:w-[calc(100%/3)]">
        <a
          href=${address}  data-navigo
-         class="flex items-center gap-3 py-4 px-6 w-full bg-white/10 rounded-lg text-xl text-center text-white font-bold hover:bg-white/20 cursor-pointer"
+         class="flex items-center gap-3 py-4 md:py-2 xl:py-4 px-6 md:px-2 xl:px-6 w-full bg-white/10 rounded-lg text-lg xl:text-xl text-center text-white font-bold hover:bg-white/20 cursor-pointer"
        >
          <i class="fa-solid fa-compact-disc"></i>
          <span>${tagName}</span>

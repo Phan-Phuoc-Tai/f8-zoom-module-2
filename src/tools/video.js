@@ -9,12 +9,7 @@ function controlVideo() {
   let currentTime = 0;
   let duration = 0;
   let lastSecond = -1;
-  const audio = document.querySelector("audio");
-  if (audio) {
-    audio.src = "";
-    audio.onloadeddata = "";
-  }
-
+  clearAnotherSound();
   playVideos();
 
   function getVideoYT(videoInfo) {
@@ -39,6 +34,7 @@ function controlVideo() {
   function onPlayerReady(event) {
     let player = event.target;
     player.playVideo();
+    player.setVolume(10);
     const footerEl = document.querySelector(".js-footer-video");
     const playerEl = footerEl.querySelector(".player");
     const playerTimer = playerEl.querySelector(".player-timer");
@@ -69,7 +65,6 @@ function controlVideo() {
       const repeatBtn = rightPlayer.querySelector(".repeat-btn");
       const shuffleBtn = rightPlayer.querySelector(".shuffle-btn");
       if (shuffleBtn.classList.contains("active")) {
-        console.log("checkShuffle");
         const activeVideo = videosEl.querySelector(".active");
         const shuffleVideo =
           Math.floor(Math.random() * (videoList.length - 1)) + 1;
@@ -115,14 +110,14 @@ function controlVideo() {
     const videoList = videosEl.querySelectorAll("li a");
     const footerEl = document.querySelector(".js-footer-video");
     const playerEl = footerEl.querySelector(".player");
-    const progress = footerEl.querySelector(".progress");
-    progress.style.width = 0;
+
     videoList[0].classList.add("bg-white/20", "active");
     autoPlay(videoList[0]);
     videoList.forEach((video) => {
       video.addEventListener("click", async (e) => {
         e.stopPropagation();
         eventApp.showLoading();
+        stopTrackingTime(timeInterval);
         player.destroy();
         const videoPlayer = document.createElement("div");
         videoPlayer.classList.add("w-full", "h-100");
@@ -155,7 +150,6 @@ function controlVideo() {
   function startTrackingTime(currentTimeEl) {
     const footerEl = document.querySelector(".js-footer-video");
     const progress = footerEl.querySelector(".progress");
-    console.log("đang chạy nè");
 
     timeInterval = setInterval(function () {
       currentTime = player.getCurrentTime();
@@ -176,7 +170,6 @@ function controlVideo() {
   }
 
   function stopTrackingTime() {
-    console.log("xoá nè");
     const footerEl = document.querySelector(".js-footer-video");
     const progress = footerEl.querySelector(".progress");
     progress.style.width = "0%";
@@ -275,6 +268,8 @@ function controlVideo() {
     //=========================================
     //rightPlayer: Begin
     const rightPlayer = footerEl.querySelector(".right-player");
+    const actGroup = rightPlayer.firstElementChild;
+    const group = rightPlayer.querySelector(".group").firstElementChild;
     const volumeGroup = rightPlayer.querySelector(".volume-group");
     const volumeControl = volumeGroup.querySelector(".volume-control");
     const volumeBtn = volumeGroup.querySelector(".volume-btn");
@@ -282,8 +277,10 @@ function controlVideo() {
     const repeatIcon = repeatBtn.querySelector("i");
     const shuffleBtn = rightPlayer.querySelector(".shuffle-btn");
     const shuffleIcon = shuffleBtn.querySelector("i");
+    const showActBtn = footerEl.querySelector(".show-act-btn");
     volumeControl.addEventListener("input", (e) => {
       e.stopPropagation();
+
       player.setVolume(volumeControl.value);
 
       if (volumeControl.value > 50) {
@@ -296,7 +293,13 @@ function controlVideo() {
         volumeBtn.className = "volume-btn fa-solid fa-volume-xmark";
       }
     });
-
+    volumeBtn.onclick = (e) => {
+      e.stopPropagation();
+      group.classList.toggle("visible");
+      group.classList.toggle("invisible");
+      group.classList.toggle("opacity-100");
+      group.classList.toggle("opacity-0");
+    };
     repeatBtn.onclick = (e) => {
       e.stopPropagation();
       if (shuffleBtn.classList.contains("active")) {
@@ -317,6 +320,13 @@ function controlVideo() {
       shuffleIcon.classList.toggle("text-blue-400");
       shuffleBtn.classList.toggle("active");
     };
+
+    showActBtn.onclick = (e) => {
+      e.stopPropagation();
+
+      actGroup.classList.toggle("hidden");
+      actGroup.classList.toggle("showAct");
+    };
     //rightPlayer: End
   }
 
@@ -334,10 +344,18 @@ function controlVideo() {
     } else {
       url = `${type}${activeVideo.dataset.videoId}`;
     }
+    stopTrackingTime(timeInterval);
     const videoInfo = await getVideoData(url);
     showVideoDetail(playerEl, videoInfo);
     player = getVideoYT(videoInfo);
     eventApp.removeLoading();
+  }
+  function clearAnotherSound() {
+    const audio = document.querySelector("audio");
+    if (audio) {
+      audio.src = "";
+      audio.onloadeddata = "";
+    }
   }
 }
 

@@ -393,6 +393,8 @@ export const eventApp = {
         const controls = xScroll.previousElementSibling;
         const nextBtn = controls.querySelector(".js-next-btn");
         const previousBtn = controls.querySelector(".js-previous-btn");
+        const widthItemChild = xScroll.querySelector("li a");
+        let distance = widthItemChild.offsetWidth * 2 + 40;
         nextBtn.classList.remove("pointer-events-none", "text-white/30");
         nextBtn.classList.add(
           "cursor-pointer",
@@ -401,7 +403,7 @@ export const eventApp = {
         );
         nextBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          xScroll.scrollLeft += 512;
+          xScroll.scrollLeft += distance;
 
           previousBtn.classList.remove("pointer-events-none", "text-white/30");
           previousBtn.classList.add(
@@ -411,7 +413,7 @@ export const eventApp = {
           );
 
           if (
-            xScroll.scrollLeft + 512 + xScroll.offsetWidth >=
+            xScroll.scrollLeft + distance + xScroll.offsetWidth >=
             xScrollScrollWidth
           ) {
             nextBtn.classList.add("pointer-events-none", "text-white/30");
@@ -424,9 +426,9 @@ export const eventApp = {
         });
         previousBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          xScroll.scrollLeft -= 512;
+          xScroll.scrollLeft -= distance;
 
-          if (xScroll.scrollLeft <= 512) {
+          if (xScroll.scrollLeft <= distance) {
             previousBtn.classList.add("pointer-events-none", "text-white/30");
             previousBtn.classList.remove(
               "cursor-pointer",
@@ -445,7 +447,6 @@ export const eventApp = {
       }
     });
   },
-  //Khi nhấn  vào thanh trượt, nếu scrollLeft = 0 thì ẩn previous, nếu
   //content : End
   /*===================================================*/
   //footer : Begin

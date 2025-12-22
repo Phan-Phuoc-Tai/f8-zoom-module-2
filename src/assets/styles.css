@@ -13,7 +13,7 @@ body {
 }
 
 .side-bar .side-bar-desktop {
-  @apply fixed top-0 left-0 bottom-0 z-100 mt-20  bg-[#030303]/90;
+  @apply hidden lg:block fixed top-0 left-0 bottom-0 z-100 mt-20  bg-[#030303]/90;
 }
 
 .side-bar nav ul li a.active {
@@ -21,7 +21,7 @@ body {
 }
 
 .content-container {
-  @apply relative top-0 ml-61 mr-10 mt-30 pb-28;
+  @apply relative top-0 ml-2 lg:ml-55 xl:ml-61 mr-2 lg:mr-12 mt-23 sm:mt-25 md:mt-30 pb-28;
 }
 
 .content-container ul li a:hover i {
@@ -60,4 +60,8 @@ body {
 }
 .toast-message.error {
   @apply bg-red-600;
+}
+
+.showAct {
+  @apply flex absolute right-10 top-4 bg-[#2b2b2b] shadow-xl rounded-lg;
 }

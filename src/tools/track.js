@@ -28,7 +28,7 @@ export const track = {
     const tracksEl = document.querySelector(".js-tracks");
     const trackList = tracksEl.querySelectorAll("li a");
     const footerEl = document.querySelector(".js-footer");
-    const playerEl = footerEl.querySelector(".player");
+    const playerEl = footerEl.querySelector(".js-player");
     const trackInfoEl = document.querySelector(".js-track-info");
 
     trackList.forEach((track) => {
@@ -62,7 +62,7 @@ export const track = {
     audio.src = trackInfo.audioUrl;
     audio.preload = "metadata";
     progress.style.width = 0;
-    audio.addEventListener("loadedmetadata", (e) => {
+    audio.addEventListener("canplay", (e) => {
       this.showTrackDetail(playerEl, trackInfo, audio.duration);
       audio.play();
       audio.volume = volumeControl.defaultValue / 100;
@@ -74,7 +74,7 @@ export const track = {
         playBtn.classList.replace("fa-pause", "fa-play");
       });
 
-      audio.addEventListener("timeupdate", (e) => {
+      audio.addEventListener("timeupdate", () => {
         let currentTimeEl = playerTimer.firstElementChild;
         currentTimeEl.innerText = format.timeTrack(audio.currentTime);
         let rate = (audio.currentTime / audio.duration) * 100;
@@ -205,6 +205,7 @@ export const track = {
     const trackList = tracksEl.querySelectorAll("li a");
     const footerEl = document.querySelector(".js-footer");
     const playerEl = footerEl.querySelector(".player");
+
     //leftPlayer: Begin
     const leftPlayer = footerEl.querySelector(".left-player");
     const playerControl = leftPlayer.querySelector(".player-control");
@@ -212,14 +213,13 @@ export const track = {
     const previousBtn = playerControl.querySelector(".previous-btn");
     const playBtn = playerControl.querySelector(".play-btn");
 
-    playBtn.addEventListener("click", () => {
+    playBtn.onclick = () => {
       if (audio.paused) {
         audio.play();
       } else {
         audio.pause();
       }
-    });
-
+    };
     nextBtn.addEventListener("click", async (e) => {
       e.stopPropagation();
       const activeTrack = tracksEl.querySelector(".active");
@@ -316,9 +316,11 @@ export const track = {
     } else {
       url = `${this._type}${activeTrack.dataset.trackId}`;
     }
+    const trackInfoEl = document.querySelector(".js-track-info");
     const trackInfo = await this.getTrackData(url);
 
     this.handleAudio(playerEl, trackInfo);
+    this.showTrackInfo(trackInfoEl, trackInfo);
     eventApp.removeLoading(300);
   },
 };

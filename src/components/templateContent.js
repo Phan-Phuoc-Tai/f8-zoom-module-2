@@ -1,8 +1,8 @@
 export default function templateContent(html, isQuickPicks = false) {
   const className =
     isQuickPicks === false
-      ? `js-xScroll xScroll flex gap-3 pb-14 overflow-x-auto scroll-smooth`
-      : `js-xScroll xScroll grid grid-rows-4 grid-flow-col overflow-x-auto auto-cols-[33.33%] gap-3 pb-14`;
+      ? `js-xScroll xScroll flex  gap-5 pb-10 lg:pb-14 overflow-x-auto scroll-smooth`
+      : `js-xScroll xScroll grid grid-rows-4 grid-flow-col overflow-x-auto  cols-[49%] md:auto-cols-[49%] xl:auto-cols-[33.33%] gap-3 pb-7 md:pb-10 lg:pb-14`;
   return `
   <div class="relative">
               <div class="absolute right-0 -top-15 flex items-center gap-4">

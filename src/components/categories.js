@@ -7,7 +7,7 @@ function categories(link, color, name) {
         href=${link} data-navigo
         class="flex items-center bg-[#292929] h-12 rounded-lg overflow-hidden"
       >
-        <span class="block h-full w-2 bg-[${color}]"></span>
+        <span style="background-color:${color}" class="block h-full w-2"></span>
         <span
           class="block w-full px-2 text-[14px] font-semibold text-white text-center"
         >${name}</span
@@ -30,7 +30,7 @@ function getItem(arr) {
 function listCategories(title, categoriesList) {
   let html = categoriesList
     .map((categories) => {
-      let content = `<li class="flex flex-col gap-5 w-59 shrink-0 mr-2">${getItem(
+      let content = `<li class="flex flex-col gap-5 w-42 md:w-48 lg:w-52 xl:w-59 shrink-0 mr-2">${getItem(
         categories
       )}</li>`;
       return content;

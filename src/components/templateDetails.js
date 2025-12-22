@@ -3,7 +3,7 @@ import songDetails from "./songDetails";
 import trackList from "./trackList";
 function templateDetails(infos, tracks, isSong = false, isPlaylist = true) {
   return `
-  <div class="grid grid-cols-2 grid-rows-1">
+  <div class="grid grid-cols-1 lg:grid-cols-2 grid-rows-1 gap-5 lg:gap-3">
       <div class="grid-cols-1">
         ${
           isSong

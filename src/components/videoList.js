@@ -12,13 +12,13 @@ function videoList(title, items) {
       }`;
 
       return `<li>
-    <a href=${link} data-navigo class="flex flex-col gap-4 px-3 py-2 rounded-md">
+    <a href=${link} data-navigo class="flex flex-col gap-4 py-2 rounded-md">
       <div
-        class="relative flex items-center justify-center w-100 h-55"
+        class="relative flex items-center justify-center w-60 md:w-80 lg:w-85 xl:w-100 "
       >
         <img
           src=${item.thumbnails ?? item.thumb}
-          class="block w-full object-cover rounded-md"
+          class="w-full h-45 lg:h-50 xl:h-60 object-cover rounded-md"
         />
         <i
           class="absolute fa-solid fa-play text-3xl text-white invisible"

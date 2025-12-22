@@ -16,7 +16,7 @@ export default function quickPick(
       return `<li>
       <a 
         href= ${link} data-navigo
-        class="flex items-center gap-4 px-3 py-2 rounded-md hover:bg-white/20"
+        class="flex w-max items-center gap-4 px-3 py-2 rounded-md hover:bg-white/20"
       >
         <div class="relative flex items-center justify-center">
           <img
@@ -26,7 +26,7 @@ export default function quickPick(
           <i class="absolute fa-solid fa-play text-white invisible"></i>
         </div>
         <div> 
-          <h3 class="text-white font-semibold">${item.title}</h3>
+          <h3 class="text-white font-semibold truncate">${item.title}</h3>
 
           <div class="flex items-center gap-2 text-[14px]">
             ${

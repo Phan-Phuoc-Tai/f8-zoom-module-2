@@ -8,7 +8,7 @@ export default function tagList(title, items) {
     <li>
       <a
       href="/moods/${item.slug}" data-navigo
-      class="block py-2 px-3 bg-white/10 rounded-lg text-[14px] text-center text-white hover:bg-white/20 cursor-pointer"
+      class="block w-max py-2 px-3 bg-white/10 rounded-lg text-[14px] text-center text-white hover:bg-white/20 cursor-pointer"
       >${item.name}</a>
     </li>`;
     })

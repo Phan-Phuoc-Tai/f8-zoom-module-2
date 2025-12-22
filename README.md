@@ -19,3 +19,5 @@
 12/20 20:40 : commit-10th: searchPage(update url cho từng song, playlist, album),search(update tìm và trả về không có kết quả) , albumPage, enable/disable next/previous btn khi cuộn đến giới hạn, audio: play/pause, next/previous, repeat, shuffle.
 
 12/21 21:00 : commit-11th: videoDetails, new-releases, video: play/pause, next/previous, repeat, shuffle.
+
+12/22 : logic rõ ràng, hanh thông, đầu óc nhanh nhạy

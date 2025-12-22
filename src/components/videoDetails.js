@@ -5,7 +5,7 @@ function videoDetails(videosInfo) {
   const views = format.views(videosInfo.popularity);
 
   return `<div class="js-video-info sticky top-32 flex flex-col items-center gap-5">
-                <div id="videoPlayer" class=" w-full h-130">
+                <div id="videoPlayer" class="w-full lg:w-100 xl:w-full h-68 sm:h-100 xl:h-130">
                   
                 </div>
 

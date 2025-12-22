@@ -13,10 +13,10 @@
       "address": "/mood-and-genres"
     }
   ],
-  "playlist" : "/playlist",
-  "albums":"/albums",
+  "playlist" : "/playlists/details/",
+  "albums":"/albums/details/",
   "songs":"/songs/details/",
   "searchKeyWord": "/search/suggestions?q=",
   "albumsLimit": "50",
-  "videos":"/videos/details"
+  "videos":"/videos/details/"
 }

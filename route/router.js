@@ -14,12 +14,20 @@ import albumsDetailsPage from "../src/pages/albumsDetailsPage";
 import newReleasesPage from "../src/pages/newReleasesPage";
 import videosDetailsPage from "../src/pages/videosDetailsPage";
 import controlVideo from "../src/tools/video";
+import { notice } from "../src/tools/notice";
 
 export const router = new Navigo("/");
 
 async function getData(url) {
-  const response = await httpRequest.get(url);
-  return response.data;
+  try {
+    const response = await httpRequest.get(url);
+    return response.data;
+  } catch (e) {
+    notice.showError(e.message);
+    eventApp.removeLoading();
+  } finally {
+    notice.hideNotice();
+  }
 }
 
 async function getProfile() {
@@ -140,13 +148,10 @@ const initRouter = async () => {
       eventApp.hideFooter(false);
       router.updatePageLinks();
     })
-    .on("/playlists/details/:slug", async () => {
+    .on("/playlists/details/:slug", async ({ data }) => {
       eventApp.showLoading();
       let user = await getProfile();
-      const locationHref = router.link(window.location.href);
-      const address = locationHref.slice(
-        locationHref.lastIndexOf(`${config.playlist}`)
-      );
+      const address = `${config.playlist}${data.slug}`;
       const playListInfos = await getData(address);
       const tracks = playListInfos.tracks;
       httpRequest.post(`/events/play`, { playlistId: playListInfos.id });
@@ -155,13 +160,10 @@ const initRouter = async () => {
       eventApp.hideFooter(false);
       router.updatePageLinks();
     })
-    .on("/songs/details/:id", async () => {
+    .on("/songs/details/:id", async ({ data }) => {
       eventApp.showLoading();
       let user = await getProfile();
-      const locationHref = router.link(window.location.href);
-      const address = locationHref.slice(
-        locationHref.lastIndexOf(`${config.songs}`)
-      );
+      const address = `${config.songs}${data.id}`;
       const songsInfo = await getData(address);
       let tracks;
       if (
@@ -227,13 +229,10 @@ const initRouter = async () => {
       eventApp.init(user);
       eventApp.hideFooter(false);
     })
-    .on("/albums/details/:slug", async () => {
+    .on("/albums/details/:slug", async ({ data }) => {
       eventApp.showLoading();
       let user = await getProfile();
-      const locationHref = router.link(window.location.href);
-      const address = locationHref.slice(
-        locationHref.lastIndexOf(`${config.albums}`)
-      );
+      const address = `${config.albums}${data.slug}`;
       const albumsInfo = await getData(
         `${address}?limit=${config.albumsLimit}`
       );
@@ -263,13 +262,10 @@ const initRouter = async () => {
       eventApp.hideFooter(false);
       router.updatePageLinks();
     })
-    .on("/videos/details/:id", async () => {
+    .on("/videos/details/:id", async ({ data }) => {
       eventApp.showLoading();
       let user = await getProfile();
-      const locationHref = router.link(window.location.href);
-      const address = locationHref.slice(
-        locationHref.lastIndexOf(`${config.videos}`)
-      );
+      const address = `${config.videos}${data.id}`;
       const videoInfo = await getData(address);
       const list = videoInfo.related;
       const videoList = duplicateTrack(list);
