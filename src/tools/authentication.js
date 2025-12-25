@@ -44,7 +44,7 @@ export const auth = {
           this.sanitizeText(email),
           this.sanitizeText(password)
         );
-        eventApp.removeLoading(0);
+
         if (loginData) {
           localStorage.setItem("accessToken", loginData.access_token);
           localStorage.setItem("refreshToken", loginData.refresh_token);
@@ -52,6 +52,7 @@ export const auth = {
             "Đăng nhập thành công! Xin vui lòng đợi trong giây lát!"
           );
           router.navigate("/");
+          eventApp.removeLoading(500);
         }
       } catch (e) {
         eventApp.removeLoading();

@@ -68,13 +68,7 @@ export const footer = () => {
                     <i class="fa-regular fa-thumbs-up"></i>
                   </button>
                 </div>
-                <div class="hidden sm:block">
-                  <button
-                    class="p-1 lg:p-2 text-white text-xl hover:bg-gray-600 hover:rounded-full cursor-pointer"
-                  >
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                  </button>
-                </div>
+                
               </div>
               
               <div class="right-player flex items-center">
@@ -152,17 +146,16 @@ export const footer = () => {
               <div class="middle-player w-60 sm:w-auto flex items-center gap-2 lg:gap-6">
                 <div class="w-10 h-10">
                   <img
-                    src="https://picsum.photos/seed/album-nhc-in-t-album-7-6/400/400"
-                    alt=""
+                    src=""
                     class="h-full object-cover rounded-sm"
                   />
                 </div>
 
                 <div class="max-w-40 md:max-w-max">
                   <h3 class="text-base text-white font-semibold truncate">
-                    Nhạc Điện Tử Album 7 - Bài 1
+                    
                   </h3>
-                  <p class="text-xs text-white/80">Không rõ nghệ sĩ</p>
+                  <p class="text-xs text-white/80"></p>
                 </div>
 
                 <div class="hidden sm:flex items-center lg:gap-2">
@@ -177,13 +170,7 @@ export const footer = () => {
                     <i class="fa-regular fa-thumbs-up"></i>
                   </button>
                 </div>
-                <div class="hidden sm:block">
-                  <button
-                    class="p-1 lg:p-2 text-white text-xl hover:bg-gray-600 hover:rounded-full cursor-pointer"
-                  >
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                  </button>
-                </div>
+                
               </div>
               
               <div class="right-player flex items-center">

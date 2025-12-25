@@ -65,7 +65,7 @@ export const sideBar = () => {
                 </div>
                 <div class="logo">
                   <a
-                    href="/"
+                    href="/" data-navigo
                     class="flex items-center w-max gap-1.5 cursor-pointer select-none"
                   >
                     <img
@@ -119,7 +119,7 @@ export const sideBar = () => {
               </ul>
 
               <a
-                href="/login"
+                href="/login" data-navigo
                 class="js-login-modal flex items-center justify-center gap-4 p-3 mt-3 bg-white/10 rounded-2xl hover:bg-white/20"
               >
                 <span class="text-base font-medium">Đăng nhập</span>

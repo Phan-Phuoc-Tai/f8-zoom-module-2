@@ -142,7 +142,7 @@ export const eventApp = {
     const itemModal = document.querySelectorAll(".side-bar-modal ul li a");
     const sideBarModalEl = document.querySelector(".side-bar .side-bar-modal");
     const modalInnerEl = sideBarModalEl.querySelector(".modal-inner");
-
+    const loginModal = document.querySelector(".side-bar .js-login-modal");
     items.forEach((item, index) => {
       item.onclick = (e) => {
         e.stopPropagation();
@@ -175,6 +175,9 @@ export const eventApp = {
         this.hideModal(modalInnerEl, sideBarModalEl);
       };
     });
+    loginModal.onclick = () => {
+      this.hideModal(modalInnerEl, sideBarModalEl);
+    };
   },
 
   hideLoginSideBar(user) {

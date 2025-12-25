@@ -147,9 +147,10 @@ function controlVideo() {
   function showVideoDetail(playerEl, videoInfo) {
     const thumb = playerEl.querySelector(".middle-player img");
     const title = playerEl.querySelector(".middle-player h3");
-
+    const artist = playerEl.querySelector(".middle-player p");
     thumb.src = videoInfo.thumbnails;
     title.innerText = videoInfo.title;
+    artist.innerText = "Không rõ nghệ sĩ";
   }
 
   function showVideoInfo(videoInfoEl, videoInfo) {
@@ -159,7 +160,7 @@ function controlVideo() {
     const view = groupInfo.lastElementChild.firstElementChild;
 
     videoTitle.innerText = videoInfo.title;
-    time.innerText = format.timeTrack(videoInfo.duration);
+    time.innerText = format.timeDetails(videoInfo.duration);
     view.innerText = format.views(videoInfo.popularity);
   }
 

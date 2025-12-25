@@ -66,7 +66,7 @@ export const track = {
     audio.src = trackInfo.audioUrl;
     audio.preload = "metadata";
     progress.style.width = 0;
-    audio.addEventListener("loadeddata", (e) => {
+    audio.addEventListener("canplay", (e) => {
       this.showTrackDetail(playerEl, trackInfo, audio.duration);
       audio.play();
       audio.volume = volumeControl.defaultValue / 100;
@@ -191,12 +191,14 @@ export const track = {
   showTrackDetail(playerEl, trackInfo, duration) {
     const thumb = playerEl.querySelector(".middle-player img");
     const title = playerEl.querySelector(".middle-player h3");
+    const artist = playerEl.querySelector(".middle-player p");
     const playerTimer = playerEl.querySelector(".player-timer");
     const durationEl = playerTimer.lastElementChild;
 
     durationEl.innerText = format.timeTrack(duration);
     thumb.src = trackInfo.thumbnails;
     title.innerText = trackInfo.title;
+    artist.innerText = "Không rõ nghệ sĩ";
   },
 
   showTrackInfo(trackInfoEl, trackInfo) {

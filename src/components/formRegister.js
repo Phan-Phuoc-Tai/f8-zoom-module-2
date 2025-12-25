@@ -63,7 +63,7 @@ export const formRegister = () => {
                   <div
                     class="mt-10 flex items-center justify-center gap-1.5 w-full text-sm"
                   >
-                    <span class="text-gray-500">Bạn đã có tài khoản?</span>
+                    <span class="text-gray-300">Bạn đã có tài khoản?</span>
                     <button
                       class="js-go-login text-white font-semibold underline hover:text-red-400 cursor-pointer"
                       >Đăng nhập</button

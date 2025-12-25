@@ -38,7 +38,7 @@ export const formLogin = () => {
                   <div
                     class="mt-10 flex items-center justify-center gap-1.5 w-full text-sm"
                   >
-                    <span class="text-gray-500">Bạn chưa có tài khoản?</span>
+                    <span class="text-gray-300">Bạn chưa có tài khoản?</span>
                     <button
                       class="js-go-register text-white font-semibold underline hover:text-red-400 cursor-pointer"
                       >Đăng ký</button

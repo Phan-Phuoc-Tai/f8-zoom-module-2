@@ -64,11 +64,7 @@ export default function header() {
               >
                 <i class="fa-brands fa-chromecast"></i>
               </button>
-              <button
-                class="hidden sm:inline p-3 hover:bg-white/20 hover:rounded-full cursor-pointer select-none"
-              >
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-              </button>
+              
             </div>
             
             <div class="user-profile">
