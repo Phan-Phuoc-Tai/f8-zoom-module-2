@@ -64,20 +64,24 @@ function controlVideo() {
       const rightPlayer = footerEl.querySelector(".right-player");
       const repeatBtn = rightPlayer.querySelector(".repeat-btn");
       const shuffleBtn = rightPlayer.querySelector(".shuffle-btn");
+      stopTrackingTime(timeInterval);
       if (shuffleBtn.classList.contains("active")) {
         const activeVideo = videosEl.querySelector(".active");
         const shuffleVideo =
           Math.floor(Math.random() * (videoList.length - 1)) + 1;
+        stopTrackingTime(timeInterval);
         handleVideo(playerEl, activeVideo, videoList[shuffleVideo]);
       }
       if (repeatBtn.classList.contains("active")) {
         const activeVideo = videosEl.querySelector(".active");
+        stopTrackingTime(timeInterval);
         handleVideo(playerEl, activeVideo, null);
       } else {
         const activeVideo = videosEl.querySelector(".active");
         const nextVideo = activeVideo.parentElement.nextElementSibling
           ? activeVideo.parentElement.nextElementSibling.querySelector("a")
           : videoList[0];
+        stopTrackingTime(timeInterval);
         handleVideo(playerEl, activeVideo, nextVideo);
       }
     } else {
@@ -110,7 +114,7 @@ function controlVideo() {
     const videoList = videosEl.querySelectorAll("li a");
     const footerEl = document.querySelector(".js-footer-video");
     const playerEl = footerEl.querySelector(".player");
-
+    const videoInfoEl = document.querySelector(".js-video-info");
     videoList[0].classList.add("bg-white/20", "active");
     autoPlay(videoList[0]);
     videoList.forEach((video) => {
@@ -126,6 +130,7 @@ function controlVideo() {
         const url = `${type}${video.dataset.videoId}`;
         const videoInfo = await getVideoData(url);
         showVideoDetail(playerEl, videoInfo);
+        showVideoInfo(videoInfoEl, videoInfo);
         player = getVideoYT(videoInfo);
         activeVideo.classList.remove("bg-white/20", "active");
         video.classList.add("bg-white/20", "active");
@@ -147,17 +152,27 @@ function controlVideo() {
     title.innerText = videoInfo.title;
   }
 
+  function showVideoInfo(videoInfoEl, videoInfo) {
+    const videoTitle = videoInfoEl.querySelector("h2");
+    const groupInfo = videoInfoEl.lastElementChild;
+    const time = groupInfo.firstElementChild.lastElementChild;
+    const view = groupInfo.lastElementChild.firstElementChild;
+
+    videoTitle.innerText = videoInfo.title;
+    time.innerText = format.timeTrack(videoInfo.duration);
+    view.innerText = format.views(videoInfo.popularity);
+  }
+
   function startTrackingTime(currentTimeEl) {
     const footerEl = document.querySelector(".js-footer-video");
     const progress = footerEl.querySelector(".progress");
-
+    progress.style.width = 0;
     timeInterval = setInterval(function () {
+      if (!timeInterval) {
+        stopTrackingTime(timeInterval);
+      }
       currentTime = player.getCurrentTime();
       duration = player.getDuration();
-      if (!timeInterval) {
-        progress.style.width = "0%";
-        clearInterval(timeInterval);
-      }
       if (currentTime !== lastSecond) {
         currentTimeEl.innerText = format.timeTrack(currentTime);
       }
@@ -169,7 +184,7 @@ function controlVideo() {
     }, 100);
   }
 
-  function stopTrackingTime() {
+  function stopTrackingTime(timeInterval) {
     const footerEl = document.querySelector(".js-footer-video");
     const progress = footerEl.querySelector(".progress");
     progress.style.width = "0%";
@@ -278,7 +293,7 @@ function controlVideo() {
     const shuffleBtn = rightPlayer.querySelector(".shuffle-btn");
     const shuffleIcon = shuffleBtn.querySelector("i");
     const showActBtn = footerEl.querySelector(".show-act-btn");
-    volumeControl.addEventListener("input", (e) => {
+    volumeControl.oninput = (e) => {
       e.stopPropagation();
 
       player.setVolume(volumeControl.value);
@@ -286,13 +301,13 @@ function controlVideo() {
       if (volumeControl.value > 50) {
         volumeBtn.className = "volume-btn fa-solid fa-volume-high";
       }
-      if (volumeControl.value > 0 && volumeControl.value <= 50) {
+      if (volumeControl.value <= 50 && volumeControl.value > 0) {
         volumeBtn.className = "volume-btn fa-solid fa-volume-low";
       }
-      if (volumeControl.value === 0) {
+      if (volumeControl.value == 0) {
         volumeBtn.className = "volume-btn fa-solid fa-volume-xmark";
       }
-    });
+    };
     volumeBtn.onclick = (e) => {
       e.stopPropagation();
       group.classList.toggle("visible");
@@ -331,24 +346,36 @@ function controlVideo() {
   }
 
   async function handleVideo(playerEl, activeVideo, video) {
-    let url = "";
-    eventApp.showLoading();
-    player.destroy();
-    const videoPlayer = document.createElement("div");
-    videoPlayer.classList.add("w-full", "h-100");
-    videoPlayer.id = "videoPlayer";
-    if (video) {
-      url = `${type}${video.dataset.videoId}`;
-      video.classList.add("bg-white/20", "active");
-      activeVideo.classList.remove("bg-white/20", "active");
-    } else {
-      url = `${type}${activeVideo.dataset.videoId}`;
-    }
-    stopTrackingTime(timeInterval);
-    const videoInfo = await getVideoData(url);
-    showVideoDetail(playerEl, videoInfo);
-    player = getVideoYT(videoInfo);
-    eventApp.removeLoading();
+    try {
+      let url = "";
+      const videoInfoEl = document.querySelector(".js-video-info");
+      const oldPlayer = videoInfoEl.querySelector("iframe");
+      const videoPlayer = document.createElement("div");
+      oldPlayer.remove();
+      videoPlayer.classList.add(
+        "w-full",
+        "lg:w-100",
+        "xl:w-full",
+        "h-68",
+        "sm:h-100",
+        "xl:h-130"
+      );
+      videoPlayer.id = "videoPlayer";
+      videoInfoEl.prepend(videoPlayer);
+      if (video) {
+        url = `${type}${video.dataset.videoId}`;
+        video.classList.add("bg-white/20", "active");
+        activeVideo.classList.remove("bg-white/20", "active");
+      } else {
+        url = `${type}${activeVideo.dataset.videoId}`;
+      }
+      eventApp.showLoading();
+      const videoInfo = await getVideoData(url);
+      showVideoDetail(playerEl, videoInfo);
+      showVideoInfo(videoInfoEl, videoInfo);
+      eventApp.removeLoading();
+      player = getVideoYT(videoInfo);
+    } catch {}
   }
   function clearAnotherSound() {
     const audio = document.querySelector("audio");

@@ -26,9 +26,9 @@ export default function header() {
               class="js-search relative hidden md:flex items-center justify-center w-full md:w-75 lg:w-118 px-4 py-1 bg-[#292929]/80 rounded-md gap-4 md:gap-0"
             >
               <button
-                class=" text-white/70 cursor-pointer select-none"
+                class=" text-white/70 select-none"
               >
-              <i class="js-hide-search fa-solid fa-magnifying-glass"></i>
+              <i class="sm:js-hide-search fa-solid fa-magnifying-glass"></i>
               </button>
               <input
                 type="text"

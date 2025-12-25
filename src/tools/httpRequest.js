@@ -24,8 +24,7 @@ export const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     router.navigate("/login");
-  } catch (e) {
-    notice.showError(e.message);
+  } catch {
   } finally {
     notice.hideNotice();
     eventApp.removeLoading();
@@ -34,6 +33,7 @@ export const logout = () => {
 const getNewToken = async () => {
   try {
     const refreshToken = localStorage.getItem("refreshToken");
+
     const response = await fetch(
       `https://youtube-music.f8team.dev/api/auth/refresh-token`,
       {
@@ -46,6 +46,7 @@ const getNewToken = async () => {
         }),
       }
     );
+
     if (!response.ok) {
       throw new Error("Unauthorized");
     }
@@ -66,14 +67,17 @@ httpRequest.interceptors.response.use(
       }
       const newToken = await refreshPromise;
       if (newToken) {
-        //lưu vào localStorage
         localStorage.setItem("accessToken", newToken.access_token);
         localStorage.setItem("refreshToken", newToken.refresh_token);
         //Gọi lại request bị failed
         return httpRequest(error.config);
       } else {
-        //logout
-        notice.showSuccess("Phiên đăng nhập hết hạn!");
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (!refreshToken) {
+          notice.showSuccess("Vui lòng đăng nhập!");
+        } else {
+          notice.showSuccess("Phiên đăng nhập hết hạn!");
+        }
         logout();
         notice.hideNotice(2000);
         eventApp.removeLoading();

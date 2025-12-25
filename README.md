@@ -1,3 +1,13 @@
+# Chức năng chính:
+
+- Đăng ký, đăng nhập, đăng xuất, thay đổi thông tin tài khoản, mật khẩu.
+
+- Phát, dừng nhạc(video). Chuyển sang, lùi về 1 bài, phát lại, ngẫu nhiên bài hát(video). tăng giảm âm lượng.
+
+- Tìm kiếm nhạc(video) dựa vào từ khoá.
+
+## Lịch sử commit
+
 12/13 09:00 : commit-1st: tạo repository, vite.
 
 12/13 20:30 : commit-2nd: - xây dựng giao diện bằng HTML/CSS gồm: header, sideBar, contentContainer,album, details, footer
@@ -21,3 +31,5 @@
 12/21 21:00 : commit-11th: videoDetails, new-releases, video: play/pause, next/previous, repeat, shuffle.
 
 12/22 20:20 : commit-12th: responsive all, searchMobile, show/hide actBtn rightControl
+
+12/25 8:05 : commit-13th: fix bug : shuffle video, audio event error

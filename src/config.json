@@ -18,5 +18,6 @@
   "songs":"/songs/details/",
   "searchKeyWord": "/search/suggestions?q=",
   "albumsLimit": "50",
+  "playListLimit": "40",
   "videos":"/videos/details/"
 }

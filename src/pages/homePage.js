@@ -25,7 +25,7 @@ async function homePage(
       ${cardList("Album gợi ý cho bạn", albumForYous)}
       ${cardList("Today's Hits", todaysHits)}
       ${cardList("Nhạc Việt", VNMusic)}
-      ${eventApp.removeLoading()}
+      ${eventApp.removeLoading(500)}
 
     </div>
   </div>

@@ -41,20 +41,19 @@ export const footer = () => {
                   <span>00:00</span>
                 </div>
               </div>
-              <div class="middle-player w-60 flex items-center gap-2 lg:gap-6">
+              <div class="middle-player w-60 sm:w-auto flex items-center gap-2 lg:gap-6">
                 <div class="w-10 h-10">
                   <img
-                    src="https://picsum.photos/seed/album-nhc-in-t-album-7-6/400/400"
-                    alt=""
+                    src=""
                     class="w-full object-cover rounded-sm"
                   />
                 </div>
 
                 <div class="max-w-40 md:max-w-max">
                   <h3 class="text-base text-white font-semibold truncate">
-                    Nhạc Điện Tử Album 7 - Bài 1
+                    
                   </h3>
-                  <p class="text-xs text-white/80">Không rõ nghệ sĩ</p>
+                  <p class="text-xs text-white/80"></p>
                 </div>
 
                 <div class="hidden sm:flex items-center lg:gap-2">

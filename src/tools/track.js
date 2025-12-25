@@ -1,21 +1,23 @@
 import { eventApp } from "./application";
 import { format } from "./format";
 import httpRequest from "./httpRequest";
+import { notice } from "./notice";
 
 export const track = {
   _type: "/songs/details/",
   init() {
     this.playTrack();
-    this.handleControl();
   },
   autoPlay(trackInfo) {
     const tracksEl = document.querySelector(".js-tracks");
     const trackList = tracksEl.querySelectorAll("li a");
     const footerEl = document.querySelector(".js-footer");
     const playerEl = footerEl.querySelector(".player");
+    const trackInfoEl = document.querySelector(".js-track-info");
 
     const firstTrack = trackList[0];
     firstTrack.classList.add("bg-white/20", "active");
+    this.showTrackInfo(trackInfoEl, trackInfo);
     this.handleAudio(playerEl, trackInfo);
   },
 
@@ -38,10 +40,12 @@ export const track = {
         const url = `${this._type}${track.dataset.trackId}`;
         eventApp.showLoading();
         const trackInfo = await this.getTrackData(url);
-        this.handleAudio(playerEl, trackInfo);
+
         this.showTrackInfo(trackInfoEl, trackInfo);
+        this.handleAudio(playerEl, trackInfo);
         track.classList.add("bg-white/20", "active");
         activeTrack.classList.remove("bg-white/20", "active");
+        notice.hideNotice();
         eventApp.removeLoading();
         document.addEventListener("keydown", this.playAudio);
       });
@@ -58,11 +62,11 @@ export const track = {
     const playerControl = leftPlayer.querySelector(".player-control");
     const playBtn = playerControl.querySelector(".play-btn i");
     const volumeControl = document.querySelector(".volume-control");
-
+    this.handleControl();
     audio.src = trackInfo.audioUrl;
     audio.preload = "metadata";
     progress.style.width = 0;
-    audio.addEventListener("canplay", (e) => {
+    audio.addEventListener("loadeddata", (e) => {
       this.showTrackDetail(playerEl, trackInfo, audio.duration);
       audio.play();
       audio.volume = volumeControl.defaultValue / 100;
@@ -80,7 +84,7 @@ export const track = {
         let rate = (audio.currentTime / audio.duration) * 100;
         progress.style.width = `${rate}%`;
       });
-
+      audio.removeEventListener("error", this.showErrorAudio);
       this.handleProgress(audio, audio.duration);
     });
     audio.onended = () => {
@@ -105,8 +109,12 @@ export const track = {
     document.addEventListener("mousedown", () => {
       document.removeEventListener("keydown", this.playAudio);
     });
+    audio.addEventListener("error", this.showErrorAudio);
   },
-
+  showErrorAudio() {
+    notice.showError("Bài hát bị lỗi không thể phát. Vui lòng chọn bài khác!");
+    notice.hideNotice(1000);
+  },
   playAudio(e) {
     const audio = document.querySelector("audio");
     e.preventDefault();
@@ -160,6 +168,7 @@ export const track = {
     });
 
     function handleDrag(e) {
+      e.stopPropagation();
       let clientX = e.clientX;
       let rate = (clientX / progressBarClientWidth) * 100;
 

@@ -22,11 +22,10 @@ async function getData(url) {
   try {
     const response = await httpRequest.get(url);
     return response.data;
-  } catch (e) {
-    notice.showError(e.message);
-    eventApp.removeLoading();
+  } catch {
   } finally {
     notice.hideNotice();
+    eventApp.removeLoading();
   }
 }
 
@@ -81,7 +80,6 @@ function assignType(list) {
 }
 const initRouter = async () => {
   const pageContent = document.querySelector(".js-body");
-
   router
     .on("/", async () => {
       eventApp.showLoading();
@@ -151,7 +149,7 @@ const initRouter = async () => {
     .on("/playlists/details/:slug", async ({ data }) => {
       eventApp.showLoading();
       let user = await getProfile();
-      const address = `${config.playlist}${data.slug}`;
+      const address = `${config.playlist}${data.slug}?limit=${config.playListLimit}`;
       const playListInfos = await getData(address);
       const tracks = playListInfos.tracks;
       httpRequest.post(`/events/play`, { playlistId: playListInfos.id });
@@ -166,22 +164,29 @@ const initRouter = async () => {
       const address = `${config.songs}${data.id}`;
       const songsInfo = await getData(address);
       let tracks;
-      if (
-        songsInfo.album.tracks.length > songsInfo.related.length &&
-        songsInfo.playlists.length
-      ) {
-        tracks = [
-          ...songsInfo.album.tracks,
-          ...songsInfo.playlists[0].tracks,
-          ...songsInfo.related,
-        ];
+      if (songsInfo.album) {
+        if (
+          songsInfo.album.tracks.length > songsInfo.related.length &&
+          songsInfo.playlists.length
+        ) {
+          tracks = [
+            ...songsInfo.album.tracks,
+            ...songsInfo.playlists[0].tracks,
+            ...songsInfo.related,
+          ];
+        }
+        if (!songsInfo.playlists.length) {
+          tracks = [...songsInfo.album.tracks, ...songsInfo.related];
+        }
+        if (songsInfo.album.tracks.length < songsInfo.related.length) {
+          tracks = [...songsInfo.related];
+        }
       }
-      if (!songsInfo.playlists.length) {
-        tracks = [...songsInfo.album.tracks, ...songsInfo.related];
-      }
-      if (songsInfo.album.tracks.length < songsInfo.related.length) {
+
+      if (!songsInfo.album) {
         tracks = [...songsInfo.related];
       }
+
       const newTracks = duplicateTrack(tracks);
       pageContent.innerHTML = await songsDetailsPage(songsInfo, newTracks);
       eventApp.init(user);
@@ -267,7 +272,7 @@ const initRouter = async () => {
       let user = await getProfile();
       const address = `${config.videos}${data.id}`;
       const videoInfo = await getData(address);
-      const list = videoInfo.related;
+      const list = [videoInfo, ...videoInfo.related];
       const videoList = duplicateTrack(list);
 
       pageContent.innerHTML = await videosDetailsPage(videoInfo, videoList);

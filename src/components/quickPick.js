@@ -16,7 +16,7 @@ export default function quickPick(
       return `<li>
       <a 
         href= ${link} data-navigo
-        class="flex w-max items-center gap-4 px-3 py-2 rounded-md hover:bg-white/20"
+        class="flex w-full items-center gap-4 px-3 py-2 rounded-md hover:bg-white/20"
       >
         <div class="relative flex items-center justify-center">
           <img

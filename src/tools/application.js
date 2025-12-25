@@ -259,12 +259,14 @@ export const eventApp = {
     const profile = document.querySelector(".user-profile");
     const options = profile.querySelector(".options");
     document.addEventListener("click", () => {
-      if (
-        options.classList.contains("visible") &&
-        options.classList.contains("translate-y-0")
-      ) {
-        options.classList.remove("visible", "opacity-100", "translate-y-0");
-        options.classList.add("invisible", "opacity-0", "translate-y-2");
+      if (profile.firstElementChild.innerText !== "Đăng nhập") {
+        if (
+          options.classList.contains("visible") &&
+          options.classList.contains("translate-y-0")
+        ) {
+          options.classList.remove("visible", "opacity-100", "translate-y-0");
+          options.classList.add("invisible", "opacity-0", "translate-y-2");
+        }
       }
     });
   },
