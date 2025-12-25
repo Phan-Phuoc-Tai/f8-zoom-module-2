@@ -32,4 +32,8 @@
 
 12/22 20:20 : commit-12th: responsive all, searchMobile, show/hide actBtn rightControl
 
-12/25 8:05 : commit-13th: fix bug : shuffle video, audio event error
+12/25 08:05 : commit-13th: fix bug : shuffle video, audio event error
+
+12/25 11:45 : commit-14th: fix bug: button login modal, hiển thị tổng thời gian phát video, xoá icon 3 dot nằm dọc, hiển thị tên nghệ sĩ của bài hát.
+
+12/25 12:05 : commit-15th: fix bug: player: button next/previous , button shuffle/repeat bị double.

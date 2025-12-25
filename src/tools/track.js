@@ -231,23 +231,32 @@ export const track = {
         audio.pause();
       }
     };
-    nextBtn.addEventListener("click", async (e) => {
+
+    nextBtn.onclick = (e) => {
       e.stopPropagation();
       const activeTrack = tracksEl.querySelector(".active");
       const nextTrack = activeTrack.parentElement.nextElementSibling
         ? activeTrack.parentElement.nextElementSibling.querySelector("a")
         : trackList[0];
       this.handlePlay(playerEl, activeTrack, nextTrack);
-    });
+    };
 
-    previousBtn.addEventListener("click", async (e) => {
+    previousBtn.onclick = (e) => {
       e.stopPropagation();
       const activeTrack = tracksEl.querySelector(".active");
       const previousTrack = activeTrack.parentElement.previousElementSibling
         ? activeTrack.parentElement.previousElementSibling.querySelector("a")
         : trackList[trackList.length - 1];
       this.handlePlay(playerEl, activeTrack, previousTrack);
-    });
+    };
+
+    //   e.stopPropagation();
+    //   const activeTrack = tracksEl.querySelector(".active");
+    //   const previousTrack = activeTrack.parentElement.previousElementSibling
+    //     ? activeTrack.parentElement.previousElementSibling.querySelector("a")
+    //     : trackList[trackList.length - 1];
+    //   this.handlePlay(playerEl, activeTrack, previousTrack);
+    // });
     //leftPlayer: End
     //=========================================
     //rightPlayer: Begin
@@ -282,7 +291,7 @@ export const track = {
       group.classList.toggle("opacity-100");
       group.classList.toggle("opacity-0");
     };
-    repeatBtn.addEventListener("click", (e) => {
+    repeatBtn.onclick = (e) => {
       e.stopPropagation();
       if (shuffleBtn.classList.contains("active")) {
         shuffleBtn.classList.remove("active");
@@ -300,9 +309,9 @@ export const track = {
           audio.pause();
         }
       });
-    });
+    };
 
-    shuffleBtn.addEventListener("click", (e) => {
+    shuffleBtn.onclick = (e) => {
       e.stopPropagation();
       if (repeatBtn.classList.contains("active")) {
         repeatBtn.classList.remove("active");
@@ -321,7 +330,8 @@ export const track = {
           audio.pause();
         }
       });
-    });
+    };
+
     showActBtn.onclick = (e) => {
       e.stopPropagation();
 
