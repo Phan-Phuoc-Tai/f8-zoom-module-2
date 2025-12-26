@@ -23,7 +23,7 @@ export const sideBar = () => {
             </li>
             <li>
               <a
-                href="#!" data-navigo
+                href="#!"
                 class="flex flex-col items-center gap-1 p-3 mb-1 hover:bg-white/10 hover:rounded-2xl"
               >
                 <i class="fa-regular fa-bookmark text-2xl"></i>
